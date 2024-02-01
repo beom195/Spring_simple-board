@@ -6,7 +6,7 @@ import lombok.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,7 @@ public class User {
     private String userEmail;
 
     @Builder
-    public User(String userLoginId, String userPassword, String userName, String userEmail) {
+    public Member(String userLoginId, String userPassword, String userName, String userEmail) {
         this.userLoginId = userLoginId;
         this.userPassword = userPassword;
         this.userName = userName;

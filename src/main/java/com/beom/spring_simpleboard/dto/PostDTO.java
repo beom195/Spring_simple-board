@@ -13,5 +13,4 @@ public class PostDTO {
     private LocalDateTime create_date;
     private LocalDateTime update_date;
     private int view;
-    private UserDTO user;
 }
