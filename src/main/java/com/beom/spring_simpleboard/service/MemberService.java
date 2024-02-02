@@ -10,4 +10,6 @@ public interface MemberService {
     public List<MemberDTO> getMemberList();
 
     public void createMember(MemberDTO memberDTO);
+
+    public void updateMember(Long id, MemberDTO memberDTO);
 }

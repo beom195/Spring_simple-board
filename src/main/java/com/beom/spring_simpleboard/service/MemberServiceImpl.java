@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -35,5 +36,12 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void createMember(MemberDTO memberDTO) {
         testRepository.save(memberDTO.toEntity());
+    }
+
+    @Transactional
+    @Override
+    public void updateMember(Long id,MemberDTO memberDTO) {
+        Optional<Member> userId = testRepository.findById(id);
+        userId.ifPresent(member -> member.updateMember(memberDTO.getUserPassword(), memberDTO.getUserName(), memberDTO.getUserEmail()));
     }
 }
