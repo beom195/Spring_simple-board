@@ -17,6 +17,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final TestRepository testRepository;
 
+    //전체 회원 불러
     @Transactional
     @Override
     public List<MemberDTO> getMemberList() {
@@ -32,16 +33,26 @@ public class MemberServiceImpl implements MemberService {
                 .collect(Collectors.toList());
     }
 
+    //회원 생성
     @Transactional
     @Override
     public void createMember(MemberDTO memberDTO) {
         testRepository.save(memberDTO.toEntity());
     }
 
+    //회원 수정
     @Transactional
     @Override
     public void updateMember(Long id,MemberDTO memberDTO) {
         Optional<Member> userId = testRepository.findById(id);
         userId.ifPresent(member -> member.updateMember(memberDTO.getUserPassword(), memberDTO.getUserName(), memberDTO.getUserEmail()));
     }
+
+    //회원 삭제
+    @Transactional
+    @Override
+    public void deleteMember(Long id) {
+        testRepository.deleteById(id);
+    }
+
 }

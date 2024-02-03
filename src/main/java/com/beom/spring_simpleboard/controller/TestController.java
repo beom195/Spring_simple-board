@@ -11,12 +11,13 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/test")
 public class TestController {
 
     private final MemberService memberService;
 
     //crud 작업 테스트(postman 활용)
-    @GetMapping("test")
+    @GetMapping("")
     public List<MemberDTO> getUserList() {
         return memberService.getMemberList();
     }
@@ -29,6 +30,11 @@ public class TestController {
     @PostMapping("test/updatemember/{id}")
     public void updateMember(@PathVariable ("id") Long id,@RequestBody MemberDTO memberDTO){
         memberService.updateMember(id, memberDTO);
+    }
+
+    @PostMapping("test/deletemember/{id}")
+    public void deleteMember(@PathVariable Long id){
+        memberService.deleteMember(id);
     }
 
 
