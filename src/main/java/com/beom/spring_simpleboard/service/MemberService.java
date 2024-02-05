@@ -1,16 +1,17 @@
 package com.beom.spring_simpleboard.service;
 
 
+import com.beom.spring_simpleboard.domain.Member;
 import com.beom.spring_simpleboard.dto.MemberDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberService {
-    public List<MemberDTO> getMemberList();
 
+    //회원가입
     public void createMember(MemberDTO memberDTO);
 
-    public void updateMember(Long id, MemberDTO memberDTO);
-
-    public void deleteMember(Long id);
+    //로그인
+    Optional<Member> login(String id, String passWord);
 }

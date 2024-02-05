@@ -2,57 +2,45 @@ package com.beom.spring_simpleboard.service;
 
 import com.beom.spring_simpleboard.domain.Member;
 import com.beom.spring_simpleboard.dto.MemberDTO;
+import com.beom.spring_simpleboard.repository.MemberRepository;
 import com.beom.spring_simpleboard.repository.TestRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class MemberServiceImpl implements MemberService {
 
-    private final TestRepository testRepository;
+    private final MemberRepository memberRepository;
 
-    //전체 회원 불러
-    @Transactional
-    @Override
-    public List<MemberDTO> getMemberList() {
-        List<Member> memberList = testRepository.findAll();
-        return memberList.stream()
-                .map(member -> MemberDTO.builder()
-                        .userId(member.getUserId())
-                        .userLoginId(member.getUserLoginId())
-                        .userPassword(member.getUserPassword())
-                        .userName(member.getUserName())
-                        .userEmail(member.getUserEmail())
-                        .build())
-                .collect(Collectors.toList());
-    }
 
     //회원 생성
     @Transactional
     @Override
     public void createMember(MemberDTO memberDTO) {
-        testRepository.save(memberDTO.toEntity());
+        memberRepository.save(memberDTO.toEntity());
     }
 
-    //회원 수정
-    @Transactional
+
+    //로그인
     @Override
-    public void updateMember(Long id,MemberDTO memberDTO) {
-        Optional<Member> userId = testRepository.findById(id);
-        userId.ifPresent(member -> member.updateMember(memberDTO.getUserPassword(), memberDTO.getUserName(), memberDTO.getUserEmail()));
-    }
+    public Optional<Member> login(String id, String passWord) {
 
-    //회원 삭제
-    @Transactional
-    @Override
-    public void deleteMember(Long id) {
-        testRepository.deleteById(id);
-    }
+        Optional<Member> member = memberRepository.findByUserLoginId(id);
 
+        if (member.isPresent() && member.get().getUserPassword().equals(passWord)) {
+            return member;
+        }
+        else {
+            log.info("아이디 또는 비밀번호가 틀립니다");
+            return Optional.empty();
+        }
+    }
 }
