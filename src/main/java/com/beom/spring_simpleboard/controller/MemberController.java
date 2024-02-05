@@ -1,6 +1,5 @@
 package com.beom.spring_simpleboard.controller;
 
-import com.beom.spring_simpleboard.domain.Member;
 import com.beom.spring_simpleboard.dto.MemberDTO;
 import com.beom.spring_simpleboard.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -34,21 +33,19 @@ public class MemberController {
     //spring security는 추후 다음 프로젝트에 적용 예정
     //다음할것 세션 쿠키 적용.
     @PostMapping("/login")
-    public String loginMember(String userLoginId, String userPassword){
+    public String loginMember(MemberDTO memberDTO){
 
-        Optional<Member> member = memberService.login(userLoginId, userPassword);
-        log.info("userLoginId = {}", userLoginId);
-        log.info("userPassword = {}", userPassword);
+        Optional<MemberDTO> member = memberService.login(memberDTO);
+        log.info("userLoginId = {}", memberDTO.getUserLoginId());
+        log.info("userPassword = {}", memberDTO.getUserPassword());
 
         //login 실패시 login.html 유지
-        if(!member.isPresent()){
+        if(member.isEmpty()){
                 return "member/login";
             }
 
         //login 성공시 index.html로 이동
         return "redirect:/";
-
-
     }
 
 }

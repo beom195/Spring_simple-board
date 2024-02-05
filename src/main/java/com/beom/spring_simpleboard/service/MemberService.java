@@ -13,5 +13,5 @@ public interface MemberService {
     public void createMember(MemberDTO memberDTO);
 
     //로그인
-    Optional<Member> login(String id, String passWord);
+    Optional<MemberDTO> login(MemberDTO memberDTO);
 }

@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class TestServiceImpl implements TestService{
+public class TestServiceImpl implements TestService {
 
     private final TestRepository testRepository;
 
-    //전체 회원 불러
+    //전체 회원 불러오기
     @Transactional
     @Override
     public List<MemberDTO> getMemberList() {

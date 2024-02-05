@@ -30,13 +30,22 @@ public class MemberServiceImpl implements MemberService {
 
 
     //로그인
+    @Transactional
     @Override
-    public Optional<Member> login(String id, String passWord) {
+    public Optional<MemberDTO> login(MemberDTO memberDTO) {
 
-        Optional<Member> member = memberRepository.findByUserLoginId(id);
+        Optional<Member> memberOptional = memberRepository.findByUserLoginId(memberDTO.getUserLoginId());
 
-        if (member.isPresent() && member.get().getUserPassword().equals(passWord)) {
-            return member;
+        if (memberOptional.isPresent() && memberOptional.get().getUserPassword().equals(memberDTO.getUserPassword())) {
+            Member loggedInMember = memberOptional.get();
+            MemberDTO memberToDTO = MemberDTO.builder()
+                    .userId(loggedInMember.getUserId())
+                    .userLoginId(loggedInMember.getUserLoginId())
+                    .userPassword(loggedInMember.getUserPassword())
+                    .userName(loggedInMember.getUserName())
+                    .userEmail(loggedInMember.getUserEmail())
+                    .build();
+            return Optional.of(memberToDTO);
         }
         else {
             log.info("아이디 또는 비밀번호가 틀립니다");
