@@ -1,0 +1,33 @@
+.loginbox{
+    /*display: block;*/
+    /*text-align: center;*/
+    /*width: 500px;*/
+    /*height: 250px;*/
+    /*position: absolute;*/
+    /*left: 50%;*/
+    /*margin-left: -150px;*/
+    margin-top: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 300px;
+    width: 100%;
+    height: 300px;
+    border: 2px solid #ddd;
+    padding: 15px;
+
+}
+input{
+    width: 80%;
+    font-size: 30px;
+
+}
+
+.input_area{
+    padding-bottom: 15px;
+    font-size: 35px;
+}
+
+.loginTitle{
+    text-align: center;
+    font-size: 25px;
+}

@@ -1,13 +1,11 @@
 package com.beom.spring_simpleboard.dto;
 
 import com.beom.spring_simpleboard.domain.Member;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@ToString
 public class MemberDTO {
 
     private Long userId;

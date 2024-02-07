@@ -1,8 +1,13 @@
 package com.beom.spring_simpleboard.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
+@Slf4j
 @Controller
 public class HomeController {
 
@@ -18,5 +23,17 @@ public class HomeController {
     @GetMapping("/member/join")
     public String join(){
         return "member/join";
+    }
+
+    //로그아웃
+    @GetMapping("/member/logout")
+    public String logout(HttpSession session){
+
+        // session 로그아웃 처리
+        if(session != null){
+            session.invalidate();
+        }
+        log.info("로그아웃 했습니다.");
+        return "redirect:/";
     }
 }
