@@ -1,4 +1,4 @@
-.loginbox{
+.joinBox{
     margin-top: 150px;
     margin-left: auto;
     margin-right: auto;
@@ -7,27 +7,20 @@
     height: 310px;
     border: 2px solid #ddd;
     padding: 15px;
-
-}
-input{
-    width: 97%;
-    font-size: 30px;
-
 }
 
-
-.loginTitle{
+.joinTitle{
     text-align: center;
     font-size: 25px;
 }
 
-.submitbutton{
-    width: 100%;
-    margin-top: 20px;
+input{
+    width: 97%;
     font-size: 25px;
 }
 
 .joinbutton{
     width: 100%;
+    margin-top: 20px;
     font-size: 25px;
 }

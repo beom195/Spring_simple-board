@@ -6,10 +6,9 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -26,11 +25,12 @@ public class MemberController {
     //회원가입
     //다음할것 유효성 검사 추가하기
     @PostMapping("/join")
-    public String joinMember(MemberDTO memberDTO){
+    public String joinMember(@Validated MemberDTO memberDTO){
 
         memberService.createMember(memberDTO);
 
-        return "redirect:/";
+//        return "redirect:/";
+        return "member/login";
     }
 
     //spring security는 추후 다음 프로젝트에 적용 예정

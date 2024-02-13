@@ -3,15 +3,12 @@ package com.beom.spring_simpleboard.service;
 import com.beom.spring_simpleboard.domain.Member;
 import com.beom.spring_simpleboard.dto.MemberDTO;
 import com.beom.spring_simpleboard.repository.MemberRepository;
-import com.beom.spring_simpleboard.repository.TestRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,6 +30,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     @Override
     public Optional<MemberDTO> login(MemberDTO memberDTO) {
+
 
         Optional<Member> memberOptional = memberRepository.findByUserLoginId(memberDTO.getUserLoginId());
 

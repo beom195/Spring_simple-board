@@ -10,21 +10,21 @@
 
 <div class="loginbox">
     <div class="loginTitle">
-        <p>로그인 하기</p>
+        <p>로그인</p>
     </div>
     <form th:action="@{/member/login}" method="post">
         <div class="input_area">
             <input class="typeId" type="text" name="userLoginId" placeholder="ID"><br>
-        </div>
-        <div class="input_area">
             <input class="typePassword" type="password" name="userPassword" placeholder="PASSWORD">
         </div>
-        <div class="submitbutton">
-            <button type="submit">로그인</button>
-            <button type="submit">회원가입</button>
+        <div>
+            <button class="submitbutton" type="submit">로그인</button>
         </div>
-
     </form>
+    <div class="join">
+        <p>계졍이 없으신가요?</p>
+        <a th:href="@{/member/join}"><button class="joinbutton">회원가입</button></a>
+    </div>
 </div>
 </body>
 </html>
