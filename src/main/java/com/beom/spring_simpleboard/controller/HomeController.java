@@ -1,9 +1,11 @@
 package com.beom.spring_simpleboard.controller;
 
+import com.beom.spring_simpleboard.dto.MemberDTO;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Slf4j
 @Controller
@@ -19,7 +21,7 @@ public class HomeController {
 
     //회원가입 폼으로 이동
     @GetMapping("/member/join")
-    public String join(){
+    public String join(@ModelAttribute("joinMember") MemberDTO memberDTO){
         return "member/join";
     }
 

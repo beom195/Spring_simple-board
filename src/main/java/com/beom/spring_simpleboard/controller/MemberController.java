@@ -3,10 +3,15 @@ package com.beom.spring_simpleboard.controller;
 import com.beom.spring_simpleboard.dto.MemberDTO;
 import com.beom.spring_simpleboard.service.MemberService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,18 +27,22 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    //회원가입
-    //다음할것 유효성 검사 추가하기
+    //회원가입(유효성 검증)
+    //다음할것 아이디, 이메일 중복 체크
     @PostMapping("/join")
-    public String joinMember(@Validated MemberDTO memberDTO){
+    public String joinMember(@Validated @ModelAttribute("joinMember") MemberDTO memberDTO, BindingResult errors, Model model){
 
+        //검증에 실패하면 다시 입력 폼으로
+        if (errors.hasErrors()) {
+            log.info("errors ={}" + errors);
+            return "member/join";
+        }
+
+        //검증 성공시 회원가입 로직 실행
         memberService.createMember(memberDTO);
-
-//        return "redirect:/";
         return "member/login";
     }
 
-    //spring security는 추후 다음 프로젝트에 적용 예정
     @PostMapping("/login")
     public String loginMember(HttpSession session, MemberDTO memberDTO){
 
