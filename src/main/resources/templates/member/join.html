@@ -12,7 +12,7 @@
     <form th:action="@{/member/join}" th:object="${joinMember}" method="post">
         <div>
             <input type="text" th:field="*{userLoginId}" id="userLoginId" name="userLoginId" placeholder="아이디">
-            <div class="field-error" th:if="${#fields.hasErrors('userLoginId')}" th:errors="*{userLoginId}">
+            <div class="field-error" th:errors="*{userLoginId}">
                 아이디 오류
             </div>
         </div>
@@ -25,13 +25,13 @@
         <div>
             <input type="text" th:field="*{userName}" id="userName" name="userName" placeholder="이름">
             <div class="field-error" th:errors="*{userName}">
-                비밀번호 오류
+                이름 오류
             </div>
         </div>
         <div>
             <input type="text" th:field="*{userEmail}" id="userEmail" name="userEmail" placeholder="이메일">
             <div class="field-error" th:errors="*{userEmail}">
-                비밀번호 오류
+                이메일 오류
             </div>
         </div>
         <button class="joinButton" type="submit">회원가입</button>

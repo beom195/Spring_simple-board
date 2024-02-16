@@ -2,15 +2,15 @@ package com.beom.spring_simpleboard.controller;
 
 import com.beom.spring_simpleboard.dto.MemberDTO;
 import com.beom.spring_simpleboard.service.MemberService;
+import com.beom.spring_simpleboard.validation.CustomValidator;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,15 +26,23 @@ public class MemberController {
     //Spring Security는 추후 프로젝트에 적용 에정
 
     private final MemberService memberService;
+    private final CustomValidator customValidator;
+
+    //설정 유효성 검증을 위해서 Databinder 추가
+    @InitBinder
+    public void initBinder(WebDataBinder binder){
+        binder.addValidators(customValidator);
+    }
 
     //회원가입(유효성 검증)
+    //회원가입 실패시 입력 데이터 유지
     //다음할것 아이디, 이메일 중복 체크
     @PostMapping("/join")
-    public String joinMember(@Validated @ModelAttribute("joinMember") MemberDTO memberDTO, BindingResult errors, Model model){
+    public String joinMember(@Validated @ModelAttribute("joinMember") MemberDTO memberDTO, Errors errors){
 
-        //검증에 실패하면 다시 입력 폼으로
+        //검증에 실패하면 다시 입력 폼으로,
         if (errors.hasErrors()) {
-            log.info("errors ={}" + errors);
+            log.info("errors = {}" + errors);
             return "member/join";
         }
 
