@@ -74,6 +74,8 @@ public class MemberController {
 
         //login 성공시 index.html로 이동
         return "redirect:/";
+
+        //커밋 테스트
     }
 
 }
