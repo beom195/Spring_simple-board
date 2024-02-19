@@ -2,6 +2,7 @@ package com.beom.spring_simpleboard.service;
 
 import com.beom.spring_simpleboard.domain.Member;
 import com.beom.spring_simpleboard.dto.MemberDTO;
+import com.beom.spring_simpleboard.dto.MemberLoginDTO;
 import com.beom.spring_simpleboard.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -29,19 +30,16 @@ public class MemberServiceImpl implements MemberService {
     //로그인
     @Transactional
     @Override
-    public Optional<MemberDTO> login(MemberDTO memberDTO) {
+    public Optional<MemberLoginDTO> login(MemberLoginDTO memberLoginDTO) {
 
+        Optional<Member> memberOptional = memberRepository.findByUserLoginId(memberLoginDTO.getUserLoginId());
 
-        Optional<Member> memberOptional = memberRepository.findByUserLoginId(memberDTO.getUserLoginId());
-
-        if (memberOptional.isPresent() && memberOptional.get().getUserPassword().equals(memberDTO.getUserPassword())) {
+        if (memberOptional.isPresent() && memberOptional.get().getUserPassword().equals(memberLoginDTO.getUserPassword())) {
             Member loggedInMember = memberOptional.get();
-            MemberDTO memberToDTO = MemberDTO.builder()
-                    .userId(loggedInMember.getUserId())
+            MemberLoginDTO memberToDTO = MemberLoginDTO.builder()
                     .userLoginId(loggedInMember.getUserLoginId())
                     .userPassword(loggedInMember.getUserPassword())
                     .userName(loggedInMember.getUserName())
-                    .userEmail(loggedInMember.getUserEmail())
                     .build();
             return Optional.of(memberToDTO);
         }

@@ -11,25 +11,25 @@
     <h2 class="joinTitle">회원가입</h2>
     <form th:action="@{/member/join}" th:object="${joinMember}" method="post">
         <div>
-            <input type="text" th:field="*{userLoginId}" id="userLoginId" name="userLoginId" placeholder="아이디">
+            <input type="text" th:field="*{userLoginId}" name="userLoginId" placeholder="아이디">
             <div class="field-error" th:errors="*{userLoginId}">
                 아이디 오류
             </div>
         </div>
         <div>
-            <input type="password" th:field="*{userPassword}" id="userPassword" name="userPassword" placeholder="비밀번호">
+            <input type="password" th:field="*{userPassword}" name="userPassword" placeholder="비밀번호">
             <div class="field-error" th:errors="*{userPassword}">
                 비밀번호 오류
             </div>
         </div>
         <div>
-            <input type="text" th:field="*{userName}" id="userName" name="userName" placeholder="이름">
+            <input type="text" th:field="*{userName}" name="userName" placeholder="이름">
             <div class="field-error" th:errors="*{userName}">
                 이름 오류
             </div>
         </div>
         <div>
-            <input type="text" th:field="*{userEmail}" id="userEmail" name="userEmail" placeholder="이메일">
+            <input type="text" th:field="*{userEmail}" name="userEmail" placeholder="이메일">
             <div class="field-error" th:errors="*{userEmail}">
                 이메일 오류
             </div>

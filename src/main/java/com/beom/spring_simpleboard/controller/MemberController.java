@@ -1,14 +1,15 @@
 package com.beom.spring_simpleboard.controller;
 
 import com.beom.spring_simpleboard.dto.MemberDTO;
+import com.beom.spring_simpleboard.dto.MemberLoginDTO;
 import com.beom.spring_simpleboard.service.MemberService;
-import com.beom.spring_simpleboard.validation.CustomValidator;
+import com.beom.spring_simpleboard.validation.JoinValidator;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,19 +27,18 @@ public class MemberController {
     //Spring Security는 추후 프로젝트에 적용 에정
 
     private final MemberService memberService;
-    private final CustomValidator customValidator;
+    private final JoinValidator joinValidator;
 
     //설정 유효성 검증을 위해서 Databinder 추가
-    @InitBinder
+    @InitBinder("joinMember")
     public void initBinder(WebDataBinder binder){
-        binder.addValidators(customValidator);
+        binder.addValidators(joinValidator);
     }
 
     //회원가입(유효성 검증)
     //회원가입 실패시 입력 데이터 유지
-    //다음할것 아이디, 이메일 중복 체크
     @PostMapping("/join")
-    public String joinMember(@Validated @ModelAttribute("joinMember") MemberDTO memberDTO, Errors errors){
+    public String joinMember(@Valid @ModelAttribute("joinMember") MemberDTO memberDTO, Errors errors){
 
         //검증에 실패하면 다시 입력 폼으로,
         if (errors.hasErrors()) {
@@ -52,17 +52,17 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String loginMember(HttpSession session, MemberDTO memberDTO){
+    public String loginMember(@Valid @ModelAttribute("loginMember") MemberLoginDTO memberLoginDTO, Errors errors, HttpSession session){
 
-        Optional<MemberDTO> member = memberService.login(memberDTO);
+        Optional<MemberLoginDTO> member = memberService.login(memberLoginDTO);
 
         //login 실패시 login.html 유지
-        if(member.isEmpty()){
-            log.info("아이디 또는 비밀번호가 틀립니다");
+        if(errors.hasErrors()){
+            log.info("loginErrors = {}", errors);
                 return "member/login";
             }
 
-        MemberDTO loggedInMember = member.get();
+        MemberLoginDTO loggedInMember = member.get();
         log.info("userLoginId = {}", loggedInMember.getUserLoginId());
         log.info("userPassword = {}", loggedInMember.getUserPassword());
 

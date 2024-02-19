@@ -2,6 +2,7 @@ package com.beom.spring_simpleboard.service;
 
 
 import com.beom.spring_simpleboard.dto.MemberDTO;
+import com.beom.spring_simpleboard.dto.MemberLoginDTO;
 
 import java.util.Optional;
 
@@ -11,5 +12,5 @@ public interface MemberService {
     void createMember(MemberDTO memberDTO);
 
     //로그인
-    Optional<MemberDTO> login(MemberDTO memberDTO);
+    Optional<MemberLoginDTO> login(MemberLoginDTO memberLoginDTO);
 }

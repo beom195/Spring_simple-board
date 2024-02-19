@@ -12,18 +12,28 @@
     <div class="loginTitle">
         <p>로그인</p>
     </div>
-    <form th:action="@{/member/login}" method="post">
+    <form th:action="@{/member/login}" th:object="${loginMember}" method="post">
         <div class="input_area">
-            <input class="typeId" type="text" name="userLoginId" placeholder="ID"><br>
-            <input class="typePassword" type="password" name="userPassword" placeholder="PASSWORD">
+            <input class="typeId" type="text" th:field="*{userLoginId}" name="userLoginId" placeholder="ID"><br>
+            <div class="field-error" th:errors="*{userLoginId}">
+                아이디 오류
+            </div>
+            <input class="typePassword" type="password" th:field="*{userPassword}" name="userPassword"
+                   placeholder="PASSWORD">
+            <div class="field-error" th:errors="*{userPassword}">
+                비밀번호 오류
+            </div>
         </div>
+
         <div>
             <button class="submitbutton" type="submit">로그인</button>
         </div>
     </form>
     <div class="join">
         <p>계졍이 없으신가요?</p>
-        <a th:href="@{/member/join}"><button class="joinbutton">회원가입</button></a>
+        <a th:href="@{/member/join}">
+            <button class="joinbutton">회원가입</button>
+        </a>
     </div>
 </div>
 </body>

@@ -1,6 +1,7 @@
 package com.beom.spring_simpleboard.controller;
 
 import com.beom.spring_simpleboard.dto.MemberDTO;
+import com.beom.spring_simpleboard.dto.MemberLoginDTO;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,7 @@ public class HomeController {
 
     //로그인 폼으로 이동
     @GetMapping("/member/login")
-    public String login(){
+    public String login(@ModelAttribute("loginMember") MemberLoginDTO memberLoginDTO){
         return "member/login";
     }
 
