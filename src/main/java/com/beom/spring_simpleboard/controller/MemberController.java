@@ -51,31 +51,32 @@ public class MemberController {
         return "member/login";
     }
 
+    //로그인
     @PostMapping("/login")
     public String loginMember(@Valid @ModelAttribute("loginMember") MemberLoginDTO memberLoginDTO, Errors errors, HttpSession session){
 
         Optional<MemberLoginDTO> member = memberService.login(memberLoginDTO);
 
-        //login 실패시 login.html 유지
+        //아이디 비밀번호가 공백일 경우
         if(errors.hasErrors()){
             log.info("loginErrors = {}", errors);
                 return "member/login";
             }
 
+        //Entity -> DTO
         MemberLoginDTO loggedInMember = member.get();
+
         log.info("userLoginId = {}", loggedInMember.getUserLoginId());
         log.info("userPassword = {}", loggedInMember.getUserPassword());
 
         //로그인 정보 session에 저장
         session.setAttribute("member", loggedInMember);
 
-//        session 만료 기간 10분 설정
+        //session 만료 기간 10분 설정
         session.setMaxInactiveInterval(600);
 
         //login 성공시 index.html로 이동
         return "redirect:/";
-
-        //커밋 테스트
     }
 
 }

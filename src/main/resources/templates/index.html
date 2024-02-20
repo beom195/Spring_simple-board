@@ -1,6 +1,6 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html lang="ko">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -50,21 +50,28 @@
               <th scope="col">제목</th>
               <th scope="col">작성일</th>
               <th scope="col">조회수</th>
-              <th scope="col">댓글수</th>
+              <!---댓글수 보는 기능은 예정 --->
+<!--              <th scope="col">댓글수</th>-->
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">10</th>
-              <td>상추에 삼겹살</td>
-              <td>오늘 점심은 햄버거</td>
+            <tr th:each="post : ${posts}">
+              <td th:text="${post.postId}">10</td>
+              <td th:text="${post.title}">상추에 삼겹살</td>
+              <td th:text="${post.content}">오늘 점심은 햄버거</td>
               <td>2024/01/19</td>
-              <td>5</td>
-              <td>3</td>
+              <td th:text="${post.view}">5</td>
+<!--              <td>3</td>-->
             </tr>
           </tbody>
         </table>
       </div>
+
+      private Long postId;
+      private String title;
+      private String content;
+      private LocalDateTime createdDate;
+      private int view;
 
 
     </div>

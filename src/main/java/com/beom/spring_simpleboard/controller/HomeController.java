@@ -37,4 +37,8 @@ public class HomeController {
         log.info("로그아웃 했습니다.");
         return "redirect:/";
     }
+
+    //글쓰기 폼으로 이동
+
+
 }

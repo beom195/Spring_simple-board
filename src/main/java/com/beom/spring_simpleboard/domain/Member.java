@@ -32,10 +32,4 @@ public class Member {
         this.userName = userName;
         this.userEmail = userEmail;
     }
-
-    public void updateMember(String userPassword, String userName, String userEmail){
-        this.userPassword = userPassword;
-        this.userName = userName;
-        this.userEmail = userEmail;
-    }
 }
