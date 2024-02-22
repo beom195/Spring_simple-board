@@ -4,7 +4,7 @@ import com.beom.spring_simpleboard.domain.Member;
 import com.beom.spring_simpleboard.dto.MemberDTO;
 import com.beom.spring_simpleboard.dto.MemberLoginDTO;
 import com.beom.spring_simpleboard.repository.MemberRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

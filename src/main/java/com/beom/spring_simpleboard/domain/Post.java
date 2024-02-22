@@ -24,18 +24,23 @@ public class Post {
     @Column(name = "post_content")
     private String content;
 
-    @Column(name = "post_createdDate")
+    @Column(name = "post_created_date")
     private LocalDateTime createdDate;
 
     @Column(name = "post_view")
     private int view;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Member member;
+
     @Builder
-    public Post(Long postId, String title, String content, LocalDateTime createdDate, int view) {
+    public Post(Long postId, String title, String content, LocalDateTime createdDate, int view, Member member) {
         this.postId = postId;
         this.title = title;
         this.content = content;
         this.createdDate = createdDate;
         this.view = view;
+        this.member = member;
     }
 }

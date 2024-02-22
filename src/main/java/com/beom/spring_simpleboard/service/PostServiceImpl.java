@@ -6,6 +6,7 @@ import com.beom.spring_simpleboard.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +19,7 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
 
     //전체 게시글 불러오기
+    @Transactional(readOnly = true)
     @Override
     public List<PostDTO> viewAllPosts() {
 

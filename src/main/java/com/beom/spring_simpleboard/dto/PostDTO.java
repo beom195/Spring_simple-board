@@ -1,5 +1,6 @@
 package com.beom.spring_simpleboard.dto;
 
+import com.beom.spring_simpleboard.domain.Member;
 import com.beom.spring_simpleboard.domain.Post;
 import lombok.*;
 
@@ -15,14 +16,16 @@ public class PostDTO {
     private String content;
     private LocalDateTime createdDate;
     private int view;
+    private Member member;
 
     @Builder
-    public PostDTO(Long postId, String title, String content, LocalDateTime createdDate, int view) {
+    public PostDTO(Long postId, String title, String content, LocalDateTime createdDate, int view, Member member) {
         this.postId = postId;
         this.title = title;
         this.content = content;
         this.createdDate = createdDate;
         this.view = view;
+        this.member = member;
     }
 
     public Post toEntity(){
@@ -32,6 +35,7 @@ public class PostDTO {
                 .content(content)
                 .createdDate(createdDate)
                 .view(view)
+                .member(member)
                 .build();
     }
 }
