@@ -9,10 +9,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -38,7 +38,10 @@ public class MemberController {
     //회원가입(유효성 검증)
     //회원가입 실패시 입력 데이터 유지
     @PostMapping("/join")
-    public String joinMember(@Valid @ModelAttribute("joinMember") MemberDTO memberDTO, Errors errors){
+    public String joinMember(@Valid MemberDTO memberDTO, Errors errors, Model model){
+
+        //회원가입 실패시 데이터 유지
+        model.addAttribute("joinMember", memberDTO);
 
         //검증에 실패하면 다시 입력 폼으로,
         if (errors.hasErrors()) {
@@ -48,12 +51,16 @@ public class MemberController {
 
         //검증 성공시 회원가입 로직 실행
         memberService.createMember(memberDTO);
-        return "member/login";
+
+        return "redirect:/member/login";
     }
 
     //로그인
     @PostMapping("/login")
-    public String loginMember(@Valid @ModelAttribute("loginMember") MemberLoginDTO memberLoginDTO, Errors errors, HttpSession session){
+    public String loginMember(@Valid MemberLoginDTO memberLoginDTO, Errors errors, HttpSession session, Model model){
+
+        //로그인 실패시 데이터 유지
+        model.addAttribute("loginMember", memberLoginDTO);
 
         Optional<MemberLoginDTO> member = memberService.login(memberLoginDTO);
 
@@ -63,7 +70,7 @@ public class MemberController {
                 return "member/login";
             }
 
-        //Entity -> DTO
+        //로그인한 Member 정보 받아오기
         MemberLoginDTO loggedInMember = member.get();
 
         log.info("userLoginId = {}", loggedInMember.getUserLoginId());

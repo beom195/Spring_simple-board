@@ -14,16 +14,17 @@ public class PostDTO {
     private Long postId;
     private String title;
     private String content;
-    private LocalDateTime createdDate;
+    private String createdDate, modifiedDate;
     private int view;
     private Member member;
 
     @Builder
-    public PostDTO(Long postId, String title, String content, LocalDateTime createdDate, int view, Member member) {
+    public PostDTO(Long postId, String title, String content, String createdDate, String modifiedDate, int view, Member member) {
         this.postId = postId;
         this.title = title;
         this.content = content;
         this.createdDate = createdDate;
+        this.modifiedDate = modifiedDate;
         this.view = view;
         this.member = member;
     }
@@ -33,7 +34,6 @@ public class PostDTO {
                 .postId(postId)
                 .title(title)
                 .content(content)
-                .createdDate(createdDate)
                 .view(view)
                 .member(member)
                 .build();

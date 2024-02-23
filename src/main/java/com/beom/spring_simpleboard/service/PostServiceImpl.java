@@ -25,13 +25,16 @@ public class PostServiceImpl implements PostService {
 
         List<Post> posts = postRepository.findAll();
 
+
         //Entity -> DTO
         return posts.stream().map(post -> PostDTO.builder()
                 .postId(post.getPostId())
                 .title(post.getTitle())
                 .content(post.getContent())
-                .createdDate(post.getCreatedDate())
                 .view(post.getView())
+                .createdDate(post.getCreatedDate())
+                .modifiedDate(post.getModifiedDate())
+                .member(post.getMember())
                 .build()
         ).collect(Collectors.toList());
     }

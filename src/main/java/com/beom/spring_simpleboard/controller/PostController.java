@@ -22,6 +22,7 @@ public class PostController {
     public String viewAllPosts(Model model){
         List<PostDTO> posts = postService.viewAllPosts();
         model.addAttribute("posts", posts);
+        log.info("postst = {}", posts);
         return "index";
 
     }

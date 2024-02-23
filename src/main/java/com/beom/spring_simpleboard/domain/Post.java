@@ -6,12 +6,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Post {
+public class Post extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,9 +23,6 @@ public class Post {
     @Column(name = "post_content")
     private String content;
 
-    @Column(name = "post_created_date")
-    private LocalDateTime createdDate;
-
     @Column(name = "post_view")
     private int view;
 
@@ -35,11 +31,10 @@ public class Post {
     private Member member;
 
     @Builder
-    public Post(Long postId, String title, String content, LocalDateTime createdDate, int view, Member member) {
+    public Post(Long postId, String title, String content, int view, Member member) {
         this.postId = postId;
         this.title = title;
         this.content = content;
-        this.createdDate = createdDate;
         this.view = view;
         this.member = member;
     }
