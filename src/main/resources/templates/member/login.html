@@ -12,15 +12,15 @@
     <div class="loginTitle">
         <p>로그인</p>
     </div>
-    <form th:action="@{/member/login}" th:object="${loginMember}" method="post">
+    <form th:action="@{/member/login}" th:object="${memberLoginDTO}" method="post">
         <div class="input_area">
-            <input class="typeId" type="text" th:field="${loginMember.userLoginId}" name="userLoginId" placeholder="ID"><br>
-            <div class="field-error" th:errors="${loginMember.userLoginId}">
+            <input class="typeId" type="text" th:field="${memberLoginDTO.userLoginId}" name="userLoginId" placeholder="ID"><br>
+            <div class="error-message" th:errors="${memberLoginDTO.userLoginId}">
                 아이디 오류
             </div>
-            <input class="typePassword" type="password" th:field="${loginMember.userPassword}" name="userPassword"
+            <input class="typePassword" type="password" th:field="${memberLoginDTO.userPassword}" name="userPassword"
                    placeholder="PASSWORD">
-            <div class="field-error" th:errors="${loginMember.userPassword}">
+            <div class="error-message" th:errors="${memberLoginDTO.userPassword}">
                 비밀번호 오류
             </div>
         </div>

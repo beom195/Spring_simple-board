@@ -31,7 +31,7 @@ input{
     font-size: 25px;
 }
 
-.field-error {
+.error-message {
     border-color: #dc3545;
     color: #dc3545;
     font-size: 15px;

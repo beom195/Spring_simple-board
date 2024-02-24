@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface PostService {
     List<PostDTO> viewAllPosts();
+
+    void savePost(PostDTO postDTO);
 }

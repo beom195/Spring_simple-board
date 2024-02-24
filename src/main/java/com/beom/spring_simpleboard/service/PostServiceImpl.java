@@ -1,8 +1,11 @@
 package com.beom.spring_simpleboard.service;
 
 import com.beom.spring_simpleboard.domain.Post;
+import com.beom.spring_simpleboard.dto.MemberDTO;
+import com.beom.spring_simpleboard.dto.MemberLoginDTO;
 import com.beom.spring_simpleboard.dto.PostDTO;
 import com.beom.spring_simpleboard.repository.PostRepository;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -37,5 +40,13 @@ public class PostServiceImpl implements PostService {
                 .member(post.getMember())
                 .build()
         ).collect(Collectors.toList());
+    }
+
+    //게시글 작성
+    @Transactional
+    @Override
+    public void savePost(PostDTO postDTO) {
+
+        postRepository.save(postDTO.toEntity());
     }
 }

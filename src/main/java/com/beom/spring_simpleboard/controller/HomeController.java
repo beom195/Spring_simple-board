@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Slf4j
 @Controller
@@ -42,6 +41,13 @@ public class HomeController {
     }
 
     //글쓰기 폼으로 이동
+    @GetMapping("/post/write")
+    public String write(HttpSession session, Model model){
+        MemberLoginDTO loggedInMember = (MemberLoginDTO) session.getAttribute("member");
+        model.addAttribute("loggedInMember", loggedInMember);
+        log.info("글쓰기 페이지로 이동");
+        return "post/write";
+    }
 
 
 }

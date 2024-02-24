@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,18 +30,18 @@ public class MemberController {
     private final JoinValidator joinValidator;
 
     //설정 유효성 검증을 위해서 Databinder 추가
-    @InitBinder("joinMember")
-    public void initBinder(WebDataBinder binder){
+    @InitBinder("memberDTO")
+    public void initBinder(WebDataBinder binder) {
         binder.addValidators(joinValidator);
     }
 
     //회원가입(유효성 검증)
     //회원가입 실패시 입력 데이터 유지
     @PostMapping("/join")
-    public String joinMember(@Valid MemberDTO memberDTO, Errors errors, Model model){
+    public String joinMember(@Valid MemberDTO memberDTO, BindingResult errors, Model model) {
 
         //회원가입 실패시 데이터 유지
-        model.addAttribute("joinMember", memberDTO);
+        model.addAttribute("memberDTO", memberDTO);
 
         //검증에 실패하면 다시 입력 폼으로,
         if (errors.hasErrors()) {
@@ -57,18 +57,23 @@ public class MemberController {
 
     //로그인
     @PostMapping("/login")
-    public String loginMember(@Valid MemberLoginDTO memberLoginDTO, Errors errors, HttpSession session, Model model){
+    public String loginMember(@Valid MemberLoginDTO memberLoginDTO, BindingResult errors, HttpSession session, Model model) {
 
         //로그인 실패시 데이터 유지
-        model.addAttribute("loginMember", memberLoginDTO);
+        model.addAttribute("memberLoginDTO", memberLoginDTO);
 
         Optional<MemberLoginDTO> member = memberService.login(memberLoginDTO);
 
         //아이디 비밀번호가 공백일 경우
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
             log.info("loginErrors = {}", errors);
-                return "member/login";
-            }
+            return "member/login";
+        }
+        //아이디 비밀번호가 틀릴경우
+        if (member.isEmpty()) {
+            log.info("아이디 또는 비밀번호가 틀립니다.");
+            return "member/login";
+        }
 
         //로그인한 Member 정보 받아오기
         MemberLoginDTO loggedInMember = member.get();

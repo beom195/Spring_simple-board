@@ -13,7 +13,6 @@ public class MemberDTO {
 
     private Long userId;
 
-
     @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9-_]{5,10}$")
     private String userLoginId;
 
@@ -38,6 +37,7 @@ public class MemberDTO {
 
     public Member toEntity(){
         return Member.builder()
+                .userId(userId)
                 .userLoginId(userLoginId)
                 .userPassword(userPassword)
                 .userName(userName)

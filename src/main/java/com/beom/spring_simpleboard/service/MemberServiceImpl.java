@@ -37,6 +37,7 @@ public class MemberServiceImpl implements MemberService {
         if (memberOptional.isPresent() && memberOptional.get().getUserPassword().equals(memberLoginDTO.getUserPassword())) {
             Member loggedInMember = memberOptional.get();
             MemberLoginDTO memberToDTO = MemberLoginDTO.builder()
+                    .userId(loggedInMember.getUserId())
                     .userLoginId(loggedInMember.getUserLoginId())
                     .userPassword(loggedInMember.getUserPassword())
                     .userName(loggedInMember.getUserName())

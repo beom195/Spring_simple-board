@@ -23,15 +23,16 @@ public class Post extends BaseTimeEntity{
     @Column(name = "post_content")
     private String content;
 
-    @Column(name = "post_view")
-    private int view;
+    //조회수 기본값 0으로 설정
+    @Column(name = "post_view" , columnDefinition = "INTEGER")
+    private Integer view;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Member member;
 
     @Builder
-    public Post(Long postId, String title, String content, int view, Member member) {
+    public Post(Long postId, String title, String content, Integer view, Member member) {
         this.postId = postId;
         this.title = title;
         this.content = content;

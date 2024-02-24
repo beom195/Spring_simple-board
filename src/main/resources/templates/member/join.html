@@ -9,28 +9,28 @@
 <body>
 <div class="joinBox">
     <h2 class="joinTitle">회원가입</h2>
-    <form th:action="@{/member/join}" th:object="${joinMember}" method="post">
+    <form th:action="@{/member/join}" th:object="${memberDTO}" method="post">
         <div>
-            <input type="text" th:field="*{userLoginId}" name="userLoginId" placeholder="아이디">
-            <div class="field-error" th:errors="*{userLoginId}">
+            <input type="text" th:field="${memberDTO.userLoginId}" name="userLoginId" placeholder="아이디">
+            <div class="error-message" th:errors="${memberDTO.userLoginId}">
                 아이디 오류
             </div>
         </div>
         <div>
-            <input type="password" th:field="*{userPassword}" name="userPassword" placeholder="비밀번호">
-            <div class="field-error" th:errors="*{userPassword}">
+            <input type="password" th:field="${memberDTO.userPassword}" name="userPassword" placeholder="비밀번호">
+            <div class="error-message" th:errors="${memberDTO.userPassword}">
                 비밀번호 오류
             </div>
         </div>
         <div>
-            <input type="text" th:field="*{userName}" name="userName" placeholder="이름">
-            <div class="field-error" th:errors="*{userName}">
+            <input type="text" th:field="${memberDTO.userName}" name="userName" placeholder="이름">
+            <div class="error-message" th:errors="${memberDTO.userName}">
                 이름 오류
             </div>
         </div>
         <div>
-            <input type="text" th:field="*{userEmail}" name="userEmail" placeholder="이메일">
-            <div class="field-error" th:errors="*{userEmail}">
+            <input type="text" th:field="${memberDTO.userEmail}" name="userEmail" placeholder="이메일">
+            <div class="error-message" th:errors="${memberDTO.userEmail}">
                 이메일 오류
             </div>
         </div>

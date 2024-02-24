@@ -4,7 +4,6 @@ import com.beom.spring_simpleboard.domain.Member;
 import com.beom.spring_simpleboard.domain.Post;
 import lombok.*;
 
-import java.time.LocalDateTime;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -15,11 +14,14 @@ public class PostDTO {
     private String title;
     private String content;
     private String createdDate, modifiedDate;
-    private int view;
+    private Integer view;
+
+    //게시글 작성 세션 멤버 정보 가져오기 위해 setter 적용
+    @Setter
     private Member member;
 
     @Builder
-    public PostDTO(Long postId, String title, String content, String createdDate, String modifiedDate, int view, Member member) {
+    public PostDTO(Long postId, String title, String content, String createdDate, String modifiedDate, Integer view, Member member) {
         this.postId = postId;
         this.title = title;
         this.content = content;
@@ -34,7 +36,7 @@ public class PostDTO {
                 .postId(postId)
                 .title(title)
                 .content(content)
-                .view(view)
+                .view(0)
                 .member(member)
                 .build();
     }
