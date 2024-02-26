@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <!--    <link rel="stylesheet" href="/css/writePage.css">-->
+    <title>게시글 수정 페이지</title>
+</head>
+<body>
+<h1>게시글 수정 페이지</h1>
+<div class="postDetailbox">
+    <form th:object="${post}">
+        <div class="postId-box">
+            <label>번호</label>
+            <input type="text" th:field="*{postId}" disabled/>
+        </div>
+        <div class="member-name-box">
+            <label>작성자</label>
+            <input type="text" th:field="*{member.userName}" disabled/>
+        </div>
+        <div class="title-box">
+            <label>제목</label>
+            <input type="text" th:field="*{title}"/>
+        </div>
+        <div class="content-box">
+            <label>내용</label>
+            <input type="text" th:field="*{content}"/>
+        </div>
+        <button type="submit">수정</button>
+    </form>
+</div>
+</body>
+</html>

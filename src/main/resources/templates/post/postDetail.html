@@ -12,20 +12,21 @@
 
     <div class="postId-box">
         <label>번호</label>
-        <p th:text="${post.postId}"></p>
+        <p type="text" th:text="*{postId}">게시글 번호</p>
     </div>
     <div class="title-box">
         <label>제목</label>
-        <p th:text="${post.title}"></p>
+        <p type="text" th:text="*{title}">게시글 제목</p>
     </div>
     <div class="member-name-box">
         <label>작성자</label>
-        <p th:text="${post.member.userName}"></p>
+        <p type="text" th:text="*{member.userName}">게시글 작성자</p>
     </div>
     <div class="content-box">
         <label>내용</label>
-        <p th:text="${post.content}"></p>
+        <p type="text" th:text="*{content}">게시글 내용</p>
     </div>
+    <a th:href="@{'/post/edit/' + *{postId}}"><button>수정</button></a>
 
 </div>
 </body>

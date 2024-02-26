@@ -3,7 +3,9 @@ package com.beom.spring_simpleboard.controller;
 import com.beom.spring_simpleboard.dto.MemberDTO;
 import com.beom.spring_simpleboard.dto.MemberLoginDTO;
 import com.beom.spring_simpleboard.dto.PostDTO;
+import com.beom.spring_simpleboard.service.PostService;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
+
+    private final PostService postService;
 
     //Spring Security는 추후 프로젝트에 적용 에정
 
@@ -51,5 +56,16 @@ public class HomeController {
         model.addAttribute("loggedInMember", loggedInMember);
         log.info("글쓰기 페이지로 이동");
         return "post/write";
+    }
+
+    //게시글 상세 페이지로 이동
+    @GetMapping("/post/detail/{id}")
+    public String getPostDetail(@PathVariable("id") Long postId, Model model){
+
+        //해당 postId 게시글 정보 가져오기
+        PostDTO post = postService.getPostDetail(postId);
+        model.addAttribute("post", post);
+
+        return "post/postDetail";
     }
 }

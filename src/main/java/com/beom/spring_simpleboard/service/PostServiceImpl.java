@@ -66,4 +66,18 @@ public class PostServiceImpl implements PostService {
 
         return postDetail;
     }
+
+    //게시글 수정하기
+    //수정 기능 미완성
+    @Override
+    public PostDTO postUpdate(Long postId, PostDTO postDTO) {
+        Optional<Post> postOptional = postRepository.findById(postId);
+        Post post = postOptional.get();
+        PostDTO postEdit = PostDTO.builder()
+                .title(post.getTitle())
+                .content(post.getContent())
+                .build();
+
+        return postEdit;
+    }
 }

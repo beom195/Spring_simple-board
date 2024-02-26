@@ -10,4 +10,6 @@ public interface PostService {
     void savePost(PostDTO postDTO);
 
     PostDTO getPostDetail(Long postId);
+
+    PostDTO postUpdate(Long postId, PostDTO postDTO);
 }

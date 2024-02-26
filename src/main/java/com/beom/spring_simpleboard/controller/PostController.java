@@ -47,15 +47,20 @@ public class PostController {
         return "redirect:/";
     }
 
-    //게시글 상세 페이지로 이동
-    @GetMapping("/post/{id}")
-    public String getPostDetail(@PathVariable("id") Long postId, Model model){
-
-        //해당 postId 게시글 정보 가져오기
+    //게시글 수정 페이지로 이동
+    @GetMapping("/post/edit/{id}")
+    public String getPostUpdate(@PathVariable("id") Long postId, Model model){
         PostDTO post = postService.getPostDetail(postId);
         model.addAttribute("post", post);
-
-        return "post/postDetail";
-
+        return "post/postEdit";
     }
+
+    //게시글 수정하기
+    @PostMapping("/post/edit/{id}")
+    public String postUpdate(@PathVariable("id") Long postId, PostDTO postDTO ,Model model){
+        PostDTO post = postService.postUpdate(postId, postDTO);
+        model.addAttribute("post", post);
+        return "redirect:/post/detail/{id}";
+    }
+
 }
