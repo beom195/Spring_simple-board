@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+<!--    <link rel="stylesheet" href="/css/writePage.css">-->
+    <title>게시글 상세페이지</title>
+</head>
+<body>
+<h1>게시글 상세 페이지</h1>
+<div class="postDetailbox" th:object="${post}">
+
+    <div class="postId-box">
+        <label>번호</label>
+        <p th:text="${post.postId}"></p>
+    </div>
+    <div class="title-box">
+        <label>제목</label>
+        <p th:text="${post.title}"></p>
+    </div>
+    <div class="member-name-box">
+        <label>작성자</label>
+        <p th:text="${post.member.userName}"></p>
+    </div>
+    <div class="content-box">
+        <label>내용</label>
+        <p th:text="${post.content}"></p>
+    </div>
+
+</div>
+</body>
+</html>

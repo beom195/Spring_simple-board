@@ -2,6 +2,7 @@ package com.beom.spring_simpleboard.dto;
 
 import com.beom.spring_simpleboard.domain.Member;
 import com.beom.spring_simpleboard.domain.Post;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 
@@ -11,8 +12,11 @@ import lombok.*;
 public class PostDTO {
 
     private Long postId;
+
     private String title;
+
     private String content;
+
     private String createdDate, modifiedDate;
     private Integer view;
 

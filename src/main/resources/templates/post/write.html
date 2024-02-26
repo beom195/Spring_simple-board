@@ -3,15 +3,15 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-<!--    <link rel="stylesheet" href="/css/loginPage.css">-->
+        <link rel="stylesheet" href="/css/writePage.css">
     <title>게시글 작성</title>
 </head>
 <body>
-    <h1>게시글 작성하기 페이지</h1>
+<h1>게시글 작성하기 페이지</h1>
 <div class="writebox">
     <form th:action="@{/post/write}" method="post">
         <input type="text" name="title" placeholder="제목">
-        <textarea name = content placeholder="글쓰기"></textarea>
+        <textarea name=content placeholder="글쓰기"></textarea>
         <button type="submit">등록</button>
     </form>
 </div>

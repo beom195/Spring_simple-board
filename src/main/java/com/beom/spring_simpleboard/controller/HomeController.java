@@ -2,11 +2,13 @@ package com.beom.spring_simpleboard.controller;
 
 import com.beom.spring_simpleboard.dto.MemberDTO;
 import com.beom.spring_simpleboard.dto.MemberLoginDTO;
+import com.beom.spring_simpleboard.dto.PostDTO;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Slf4j
 @Controller
@@ -43,11 +45,11 @@ public class HomeController {
     //글쓰기 폼으로 이동
     @GetMapping("/post/write")
     public String write(HttpSession session, Model model){
+        //로그인한 session 정보 가져오기
         MemberLoginDTO loggedInMember = (MemberLoginDTO) session.getAttribute("member");
+
         model.addAttribute("loggedInMember", loggedInMember);
         log.info("글쓰기 페이지로 이동");
         return "post/write";
     }
-
-
 }

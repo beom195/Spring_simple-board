@@ -1,17 +1,15 @@
 package com.beom.spring_simpleboard.service;
 
 import com.beom.spring_simpleboard.domain.Post;
-import com.beom.spring_simpleboard.dto.MemberDTO;
-import com.beom.spring_simpleboard.dto.MemberLoginDTO;
 import com.beom.spring_simpleboard.dto.PostDTO;
 import com.beom.spring_simpleboard.repository.PostRepository;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -26,18 +24,18 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostDTO> viewAllPosts() {
 
-        List<Post> posts = postRepository.findAll();
+        List<Post> postList = postRepository.findAll();
 
 
         //Entity -> DTO
-        return posts.stream().map(post -> PostDTO.builder()
-                .postId(post.getPostId())
-                .title(post.getTitle())
-                .content(post.getContent())
-                .view(post.getView())
-                .createdDate(post.getCreatedDate())
-                .modifiedDate(post.getModifiedDate())
-                .member(post.getMember())
+        return postList.stream().map(posts -> PostDTO.builder()
+                .postId(posts.getPostId())
+                .title(posts.getTitle())
+                .content(posts.getContent())
+                .view(posts.getView())
+                .createdDate(posts.getCreatedDate())
+                .modifiedDate(posts.getModifiedDate())
+                .member(posts.getMember())
                 .build()
         ).collect(Collectors.toList());
     }
@@ -48,5 +46,24 @@ public class PostServiceImpl implements PostService {
     public void savePost(PostDTO postDTO) {
 
         postRepository.save(postDTO.toEntity());
+    }
+
+    //게시글 상세 페이지
+    @Transactional
+    @Override
+    public PostDTO getPostDetail(Long postId) {
+        Optional<Post> postOptional = postRepository.findById(postId);
+        Post post = postOptional.get();
+        PostDTO postDetail = PostDTO.builder()
+                .postId(post.getPostId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .view(post.getView())
+                .createdDate(post.getCreatedDate())
+                .modifiedDate(post.getModifiedDate())
+                .member(post.getMember())
+                .build();
+
+        return postDetail;
     }
 }

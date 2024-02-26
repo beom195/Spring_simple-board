@@ -8,4 +8,6 @@ public interface PostService {
     List<PostDTO> viewAllPosts();
 
     void savePost(PostDTO postDTO);
+
+    PostDTO getPostDetail(Long postId);
 }
