@@ -8,8 +8,8 @@
 </head>
 <body>
 <h1>게시글 수정 페이지</h1>
-<div class="postDetailbox">
-    <form th:object="${post}">
+<div class="postEditbox" th:object="${post}">
+    <form th:action="@{'/post/edit/' + *{postId}}" method="post">
         <div class="postId-box">
             <label>번호</label>
             <input type="text" th:field="*{postId}" disabled/>

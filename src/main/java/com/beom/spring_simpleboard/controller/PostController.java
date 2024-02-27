@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,6 +51,7 @@ public class PostController {
     //게시글 수정 페이지로 이동
     @GetMapping("/post/edit/{id}")
     public String getPostUpdate(@PathVariable("id") Long postId, Model model){
+        log.info("수정 페이지로 이동");
         PostDTO post = postService.getPostDetail(postId);
         model.addAttribute("post", post);
         return "post/postEdit";
@@ -57,10 +59,18 @@ public class PostController {
 
     //게시글 수정하기
     @PostMapping("/post/edit/{id}")
-    public String postUpdate(@PathVariable("id") Long postId, PostDTO postDTO ,Model model){
-        PostDTO post = postService.postUpdate(postId, postDTO);
-        model.addAttribute("post", post);
+    public String postUpdate(@PathVariable("id") Long postId, PostDTO postDTO){
+        log.info("게시글 수정하기");
+        postService.postUpdate(postId, postDTO);
         return "redirect:/post/detail/{id}";
+    }
+
+    //게시글 삭제하기
+    @DeleteMapping("/post/delete/{id}")
+    public String postDelete(@PathVariable("id") Long postId){
+        log.info("게시글 삭제하기");
+        postService.postDelete(postId);
+        return "redirect:/";
     }
 
 }
