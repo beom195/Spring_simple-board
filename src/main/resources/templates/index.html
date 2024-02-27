@@ -29,13 +29,12 @@
       <div class="registry" th:if="${session.member == null}">
         <a th:href="@{/member/join}"><button>회원가입</button></a>
         <a th:href="@{/member/login}"><button>로그인</button></a>
+        <a th:href="@{/post/write}"><button>글쓰기</button></a>
       </div>
 
       <div class="registry" th:if="${session.member != null}">
         <span th:text="${session.member.userName}"></span>
         <span>님 환영합니다</span>
-
-        <!-- 글쓰기 기능 추가 예정-->
         <a th:href="@{/post/write}"><button>글쓰기</button></a>
         <a th:href="@{/member/logout}"><button>로그아웃</button></a>
       </div>
