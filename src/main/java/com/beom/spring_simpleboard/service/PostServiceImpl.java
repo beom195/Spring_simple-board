@@ -1,6 +1,7 @@
 package com.beom.spring_simpleboard.service;
 
 import com.beom.spring_simpleboard.domain.Post;
+import com.beom.spring_simpleboard.dto.MemberLoginDTO;
 import com.beom.spring_simpleboard.dto.PostDTO;
 import com.beom.spring_simpleboard.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -53,18 +54,21 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDTO getPostDetail(Long postId) {
         Optional<Post> postOptional = postRepository.findById(postId);
-        Post post = postOptional.get();
-        PostDTO postDetail = PostDTO.builder()
-                .postId(post.getPostId())
-                .title(post.getTitle())
-                .content(post.getContent())
-                .view(post.getView())
-                .createdDate(post.getCreatedDate())
-                .modifiedDate(post.getModifiedDate())
-                .member(post.getMember())
-                .build();
+        if(postOptional.isPresent()) {
+            Post post = postOptional.get();
+            PostDTO postDetail = PostDTO.builder()
+                    .postId(post.getPostId())
+                    .title(post.getTitle())
+                    .content(post.getContent())
+                    .view(post.getView())
+                    .createdDate(post.getCreatedDate())
+                    .modifiedDate(post.getModifiedDate())
+                    .member(post.getMember())
+                    .build();
 
-        return postDetail;
+            return postDetail;
+        }
+        return null;
     }
 
     //게시글 수정하기

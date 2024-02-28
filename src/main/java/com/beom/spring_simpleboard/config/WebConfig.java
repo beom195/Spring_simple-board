@@ -13,6 +13,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new AuthInterceptor())
                 .order(1)
                 .addPathPatterns("/post/edit/{id}", "/post/write")
-                .excludePathPatterns("/", "/member/join", "/member/login", "/member/logout", "/css/**"); // 인터셉터에서 제외할 패턴
+                .excludePathPatterns("/", "/member/join", "/member/login", "/member/logout", "/css/**");
     }
 }

@@ -60,12 +60,16 @@ public class HomeController {
 
     //게시글 상세 페이지로 이동
     @GetMapping("/post/detail/{id}")
-    public String getPostDetail(@PathVariable("id") Long postId, Model model){
+    public String getPostDetail(@PathVariable("id") Long postId, Model model, HttpSession session){
 
         //해당 postId 게시글 정보 가져오기
         PostDTO post = postService.getPostDetail(postId);
-        model.addAttribute("post", post);
 
+        //session에 저장된 member 정보가 일치하면 수정과 삭제 버튼을 보이게하기 위해 member session 받아오기
+        MemberLoginDTO loggedInMember = (MemberLoginDTO) session.getAttribute("member");
+
+        model.addAttribute("post", post);
+        model.addAttribute("sessionMember", loggedInMember);
         return "post/postDetail";
     }
 }
