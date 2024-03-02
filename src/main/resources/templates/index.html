@@ -69,7 +69,7 @@
                     <td th:text="${post.member.userName}">게시글작성자</td>
                     <td><a th:href="@{'/post/detail/' + ${post.postId}}"><span th:text="${post.title}">게시글 제목</span></a>
                     </td>
-                    <td th:text="${post.createdDate}">게시글 작성일</td>
+                    <td th:text="${post.modifiedDate}">게시글 작성일</td>
                     <td th:text="${post.view}">게시글 조회수</td>
                     <!--              <td>3</td>-->
                 </tr>

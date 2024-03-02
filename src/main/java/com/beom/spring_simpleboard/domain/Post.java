@@ -24,7 +24,7 @@ public class Post extends BaseTimeEntity{
     private String content;
 
     //조회수 기본값 0으로 설정
-    @Column(name = "post_view" , columnDefinition = "INTEGER")
+    @Column(name = "post_view" , columnDefinition = "integer default 0", nullable = false)
     private Integer view;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,7 +41,7 @@ public class Post extends BaseTimeEntity{
     }
 
     //게시글 수정하기
-    public void postUpdate(String title, String content){
+    public void update(String title, String content){
         this.title = title;
         this.content = content;
     }

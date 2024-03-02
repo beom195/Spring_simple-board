@@ -78,7 +78,7 @@ public class PostServiceImpl implements PostService {
         Optional<Post> postOptional = postRepository.findById(postId);
 
         Post post = postOptional.get();
-        post.postUpdate(postDTO.getTitle(),postDTO.getContent());
+        post.update(postDTO.getTitle(),postDTO.getContent());
     }
 
     //게시글 삭제하기
@@ -86,5 +86,12 @@ public class PostServiceImpl implements PostService {
     @Override
     public void postDelete(Long postId) {
         postRepository.deleteById(postId);
+    }
+
+    //조회수 증가
+    @Transactional
+    @Override
+    public int plusView(Long postId) {
+        return postRepository.plusView(postId);
     }
 }

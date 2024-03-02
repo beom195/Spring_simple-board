@@ -22,6 +22,13 @@ public class PostController {
 
     private final PostService postService;
 
+    //게시글 목록으로 돌아가기
+    @GetMapping("/post/viewPosts")
+    public String getPosts(){
+        return "redirect:/";
+    }
+
+
     //전체 게시글 불러오기
     @GetMapping("/")
     public String viewAllPosts(Model model) {
@@ -72,5 +79,6 @@ public class PostController {
         postService.postDelete(postId);
         return "redirect:/";
     }
+
 
 }
