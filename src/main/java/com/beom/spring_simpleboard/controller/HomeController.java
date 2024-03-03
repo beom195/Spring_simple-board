@@ -66,7 +66,6 @@ public class HomeController {
         PostDTO post = postService.getPostDetail(postId);
         //게시글 상세 페이지 조회시 조회수 1 상승
         postService.plusView(postId);
-
         //session에 저장된 member 정보가 일치하면 수정과 삭제 버튼을 보이게하기 위해 member session 받아오기
         MemberLoginDTO loggedInMember = (MemberLoginDTO) session.getAttribute("member");
 

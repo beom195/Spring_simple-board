@@ -12,7 +12,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AuthInterceptor())
                 .order(1)
-                .addPathPatterns("/post/edit/{id}", "/post/write")
+                .addPathPatterns("/post/detail/{id}" ,"/post/edit/{id}", "/post/write")
                 .excludePathPatterns("/", "/member/join", "/member/login", "/member/logout", "/css/**");
     }
 }

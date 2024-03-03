@@ -16,5 +16,5 @@ public interface PostService {
 
     void postDelete(Long postId);
 
-    int plusView(Long postId);
+    void plusView(Long postId);
 }

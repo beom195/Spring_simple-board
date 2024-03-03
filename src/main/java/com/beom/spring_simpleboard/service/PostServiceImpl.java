@@ -4,6 +4,9 @@ import com.beom.spring_simpleboard.domain.Post;
 import com.beom.spring_simpleboard.dto.MemberLoginDTO;
 import com.beom.spring_simpleboard.dto.PostDTO;
 import com.beom.spring_simpleboard.repository.PostRepository;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -54,6 +57,8 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDTO getPostDetail(Long postId) {
         Optional<Post> postOptional = postRepository.findById(postId);
+
+
         if(postOptional.isPresent()) {
             Post post = postOptional.get();
             PostDTO postDetail = PostDTO.builder()
@@ -91,7 +96,9 @@ public class PostServiceImpl implements PostService {
     //조회수 증가
     @Transactional
     @Override
-    public int plusView(Long postId) {
-        return postRepository.plusView(postId);
+    public void plusView(Long postId) {
+        log.info("조회수 증가");
+        postRepository.plusView(postId);
     }
+
 }
