@@ -2,6 +2,8 @@ package com.beom.spring_simpleboard.service;
 
 import com.beom.spring_simpleboard.dto.MemberLoginDTO;
 import com.beom.spring_simpleboard.dto.PostDTO;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
 
@@ -16,5 +18,5 @@ public interface PostService {
 
     void postDelete(Long postId);
 
-    void plusView(Long postId);
+    void plusView(Long postId, HttpServletRequest request, HttpServletResponse response, Long userId);
 }
