@@ -2,7 +2,6 @@ package com.beom.spring_simpleboard.dto;
 
 import com.beom.spring_simpleboard.domain.Member;
 import com.beom.spring_simpleboard.domain.Post;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 

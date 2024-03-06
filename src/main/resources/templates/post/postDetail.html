@@ -36,6 +36,16 @@
             <button id="delete-btn">삭제</button>
         </form>
     </div>
+
+    <div class="comment-box">
+        <h1>댓글</h1>
+        <div th:each="comment : ${commentList}">
+            <span>작성자</span><p th:text="${comment.member.userName}">작성자</p>
+            <span>댓글 내용</span><p th:text="${comment.comment}">댓글 내용</p>
+            <span>댓글 작성일</span><p th:text="${comment.modifiedDate}">댓글 작성일</p>
+        </div>
+
+    </div>
     <div>
         <a th:href="@{/post/viewPosts}">
             <button>목록</button>

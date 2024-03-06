@@ -1,8 +1,10 @@
 package com.beom.spring_simpleboard.controller;
 
+import com.beom.spring_simpleboard.dto.CommentDTO;
 import com.beom.spring_simpleboard.dto.MemberDTO;
 import com.beom.spring_simpleboard.dto.MemberLoginDTO;
 import com.beom.spring_simpleboard.dto.PostDTO;
+import com.beom.spring_simpleboard.service.CommentService;
 import com.beom.spring_simpleboard.service.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,12 +16,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
 
     private final PostService postService;
+    private final CommentService commentService;
 
     //Spring Security는 추후 프로젝트에 적용 에정
 
@@ -77,8 +82,9 @@ public class HomeController {
         //게시글 상세 페이지 조회시 조회수 1 상승
         postService.plusView(postId, request, response, userId);
 
-
-
+        List<CommentDTO> commentList = commentService.getCommentList(postId);
+        log.info("commentList = {}", commentList.toString());
+        model.addAttribute("commentList", commentList);
         model.addAttribute("post", post);
         model.addAttribute("sessionMember", loggedInMember);
         return "post/postDetail";

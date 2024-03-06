@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 
 @Entity
 @Getter
@@ -30,6 +32,10 @@ public class Post extends BaseTimeEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Member member;
+
+    //글 삭제시 게시글에 달린 댓글도 같이 삭제
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    private List<Comment> comments;
 
     @Builder
     public Post(Long postId, String title, String content, Integer view, Member member) {

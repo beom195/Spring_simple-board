@@ -16,11 +16,11 @@ public class BaseTimeEntity {
 
     //DateTimeFormatter사용 위해 LocalDateTime -> String 변환
 
-    @Column(name = "post_created_date")
+    @Column(name = "created_date")
     @CreatedDate
     private String createdDate;
 
-    @Column(name = "post_modified_date")
+    @Column(name = "modified_date")
     @LastModifiedDate
     private String modifiedDate;
 

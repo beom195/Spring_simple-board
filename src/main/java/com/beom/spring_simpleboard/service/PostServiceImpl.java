@@ -51,7 +51,15 @@ public class PostServiceImpl implements PostService {
 
         if (postOptional.isPresent()) {
             Post post = postOptional.get();
-            PostDTO postDetail = PostDTO.builder().postId(post.getPostId()).title(post.getTitle()).content(post.getContent()).view(post.getView()).createdDate(post.getCreatedDate()).modifiedDate(post.getModifiedDate()).member(post.getMember()).build();
+            PostDTO postDetail = PostDTO.builder()
+                    .postId(post.getPostId())
+                    .title(post.getTitle())
+                    .content(post.getContent())
+                    .view(post.getView())
+                    .createdDate(post.getCreatedDate())
+                    .modifiedDate(post.getModifiedDate())
+                    .member(post.getMember())
+                    .build();
 
             return postDetail;
         }
@@ -87,12 +95,12 @@ public class PostServiceImpl implements PostService {
         String cookieValue = "[" + userId + "-" + postId + "]";
 
         //cookies에 cookie가 있는지 확인
-        for(int i = 0; cookies != null && i < cookies.length; i++){
+        for (int i = 0; cookies != null && i < cookies.length; i++) {
             //쿠키에 "alreadyView"라는 값이 있을때
-            if(cookies[i].getName().equals("alreadyView")){
+            if (cookies[i].getName().equals("alreadyView")) {
                 cookie = cookies[i];
                 //쿠키 값에 해당 회원 번호와 게시글 번호가 없을때
-                if(!cookie.getValue().contains(cookieValue)){
+                if (!cookie.getValue().contains(cookieValue)) {
                     log.info("조회수 증가");
                     postRepository.plusView(postId);
                     cookie.setValue(cookie.getValue() + cookieValue);
@@ -103,12 +111,12 @@ public class PostServiceImpl implements PostService {
         }
 
         //checkCookie가 false일 경우 즉 쿠키에 값이 없을 경우
-        if(!checkCookie){
+        if (!checkCookie) {
             log.info("조회수 증가");
             postRepository.plusView(postId);
             cookie = new Cookie("alreadyView", cookieValue);
         }
-        cookie.setMaxAge(60*60*24); //쿠키 유효 기간: 하루로 설정(60초 * 60분 * 24시간)
+        cookie.setMaxAge(60 * 60 * 24); //쿠키 유효 기간: 하루로 설정(60초 * 60분 * 24시간)
         cookie.setPath("/"); //모든 경로에서 접근 가능하도록 설정
         response.addCookie(cookie); //response에 Cookie 추가
     }
