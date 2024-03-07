@@ -11,9 +11,14 @@
 <div class="writebox">
     <form th:action="@{/post/write}" method="post">
         <input type="text" name="title" placeholder="제목">
-        <textarea name=content placeholder="글쓰기"></textarea>
+        <textarea name="content" placeholder="글쓰기"></textarea>
         <button type="submit">등록</button>
     </form>
+    <div>
+        <a th:href="@{/post/viewPosts}">
+            <button>목록</button>
+        </a>
+    </div>
 </div>
 </body>
 </html>

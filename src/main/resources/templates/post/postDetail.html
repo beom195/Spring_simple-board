@@ -31,18 +31,37 @@
         <a th:href="@{'/post/edit/' + ${post.postId}}">
             <button>수정</button>
         </a>
-        <form id="delete-form" th:action="@{'/post/delete/' + ${post.postId}}" method="post">
+        <form th:action="@{'/post/delete/' + ${post.postId}}" method="post">
             <input type="hidden" name="_method" value="delete"/>
-            <button id="delete-btn">삭제</button>
+            <button type="submit">삭제</button>
         </form>
     </div>
 
     <div class="comment-box">
         <h1>댓글</h1>
         <div th:each="comment : ${commentList}">
-            <span>작성자</span><p th:text="${comment.member.userName}">작성자</p>
-            <span>댓글 내용</span><p th:text="${comment.comment}">댓글 내용</p>
-            <span>댓글 작성일</span><p th:text="${comment.modifiedDate}">댓글 작성일</p>
+            <span>작성자</span>
+            <p th:text="${comment.member.userName}">작성자</p>
+            <span>댓글 내용</span>
+            <p th:text="${comment.comment}">댓글 내용</p>
+            <span>댓글 작성일</span>
+            <p th:text="${comment.modifiedDate}">댓글 작성일</p>
+            <div th:if="${comment.member.userLoginId} == ${sessionMember.userLoginId}">
+                <!--                <a th:href="">-->
+                <button>댓글 수정</button>
+                <!--                </a>-->
+                <!--                <form th:action="" method="post">-->
+                <input type="hidden" name="_method" value="delete"/>
+                <button type="submit">댓글 삭제</button>
+                <!--                </form>-->
+            </div>
+        </div>
+        <!--        댓글 등록-->
+        <div>
+            <form th:action="@{/post/{postId}/comment(postId=${post.getPostId})}" method="post">
+                <textarea name="comment" placeholder="댓글 쓰기"></textarea>
+                <button type="submit">등록</button>
+            </form>
         </div>
 
     </div>

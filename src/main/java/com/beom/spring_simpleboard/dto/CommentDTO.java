@@ -16,15 +16,15 @@ public class CommentDTO {
 
     private String comment;
 
-    private LocalDateTime createdDate;
+    private String createdDate;
 
-    private LocalDateTime modifiedDate;
+    private String modifiedDate;
 
     private Member member;
     private Post post;
 
     @Builder
-    public CommentDTO(Long commentId, String comment, LocalDateTime createdDate, LocalDateTime modifiedDate, Member member, Post post) {
+    public CommentDTO(Long commentId, String comment, String createdDate, String modifiedDate, Member member, Post post) {
         this.commentId = commentId;
         this.comment = comment;
         this.createdDate = createdDate;
