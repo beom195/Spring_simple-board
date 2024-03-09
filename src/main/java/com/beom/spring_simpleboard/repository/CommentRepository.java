@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     //fetch join으로 n+1 해결
-    @Query("SELECT c FROM Comment c JOIN FETCH c.member WHERE c.post.postId = :postId")
+    @Query("SELECT c FROM Comment c JOIN FETCH c.member WHERE c.post.postId = :postId ORDER BY c.commentId ASC")
     List<Comment> findCommentsWithMemberByPostId(@Param("postId") Long postId);
-
 }

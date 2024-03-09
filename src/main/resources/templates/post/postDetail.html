@@ -3,8 +3,12 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <!--    <link rel="stylesheet" href="/css/writePage.css">-->
-    <title>게시글 상세페이지</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<title>게시글 상세페이지</title>
 </head>
 <body>
 <h1>게시글 상세 페이지</h1>
@@ -47,13 +51,16 @@
             <span>댓글 작성일</span>
             <p th:text="${comment.modifiedDate}">댓글 작성일</p>
             <div th:if="${comment.member.userLoginId} == ${sessionMember.userLoginId}">
-                <!--                <a th:href="">-->
-                <button>댓글 수정</button>
-                <!--                </a>-->
-                <!--                <form th:action="" method="post">-->
-                <input type="hidden" name="_method" value="delete"/>
-                <button type="submit">댓글 삭제</button>
-                <!--                </form>-->
+                <button type="button" data-toggle="collapse" th:attr="data-target='#' + ${comment.commentId}">
+                    댓글 수정
+                </button>
+                <form class="collapse" th:id="${comment.commentId}">
+                    <div>
+                        <input type="hidden" id ="commentId" th:value="${comment.commentId}">
+                        <textarea type="text" name="comment" id="comment" th:text="${comment.comment}"></textarea>
+                        <button type="button" id="comment-update-btn">수정</button>
+                    </div>
+                </form>
             </div>
         </div>
         <!--        댓글 등록-->
@@ -71,5 +78,7 @@
         </a>
     </div>
 </div>
+
+<script src="/js/comment.js"></script>
 </body>
 </html>

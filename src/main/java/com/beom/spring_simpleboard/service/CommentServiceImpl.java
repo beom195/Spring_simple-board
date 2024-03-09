@@ -12,9 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -26,6 +24,7 @@ public class CommentServiceImpl implements CommentService {
     private final MemberRepository memberRepository;
     private final CommentRepository commentRepository;
 
+    //댓글 리스트 불러오기
     @Transactional(readOnly = true)
     @Override
     public List<CommentDTO> getCommentList(Long postId) {
@@ -43,6 +42,8 @@ public class CommentServiceImpl implements CommentService {
                 .collect(Collectors.toList());
     }
 
+    //댓글 작성
+    @Transactional
     @Override
     public void writeComment(Long postId, CommentDTO commentDTO, Long userId) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
@@ -57,5 +58,13 @@ public class CommentServiceImpl implements CommentService {
                 .build();
         Comment commentDTOToEntity = comment.toEntity();
         commentRepository.save(commentDTOToEntity);
+    }
+
+    //댓글 수정
+    @Transactional
+    @Override
+    public void updateComment(Long commentId, CommentDTO commentDTO) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
+        comment.update(commentDTO.getComment());
     }
 }

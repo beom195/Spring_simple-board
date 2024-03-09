@@ -38,4 +38,9 @@ public class Comment extends BaseTimeEntity{
         this.member = member;
         this.comment = comment;
     }
+
+    //댓글 수정하기
+    public void update(String comment){
+        this.comment = comment;
+    }
 }

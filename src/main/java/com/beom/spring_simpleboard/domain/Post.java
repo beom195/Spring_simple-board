@@ -35,8 +35,7 @@ public class Post extends BaseTimeEntity{
 
     //글 삭제시 게시글에 달린 댓글도 같이 삭제
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-    @OrderBy("commentId asc") // 댓글 정렬
-    private List<Comment> comments;
+    private List<Comment> commentList;
 
     @Builder
     public Post(Long postId, String title, String content, Integer view, Member member) {
