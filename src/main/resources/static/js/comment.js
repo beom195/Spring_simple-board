@@ -28,3 +28,23 @@ commentUpdateBtn.addEventListener("click", () => {
         });
     }
 });
+
+const commentDeleteBtn = document.getElementById("comment-delete-btn");
+commentDeleteBtn.addEventListener("click",() =>{
+    const data ={
+        commentId: commentDeleteBtn.value
+    }
+    const cm_delete_check = confirm("댓글을 삭제하시겠습니까?");
+    console.log("commentId" , data.commentId);
+    if(cm_delete_check === true){
+        $.ajax({
+            type: "DELETE",
+            url: "/comment/" + data.commentId,
+            dataType: "JSON",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data)
+        }).done(function (){
+            window.location.reload();
+        })
+    }
+});

@@ -67,4 +67,13 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
         comment.update(commentDTO.getComment());
     }
+
+    //댓글 삭제
+    @Transactional
+    @Override
+    public void deleteComment(Long commentId, CommentDTO commentDTO) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("댓글이 존재하지 않습니다."));
+        commentRepository.delete(comment);
+
+    }
 }
