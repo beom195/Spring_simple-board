@@ -8,7 +8,7 @@ public interface CommentService {
 
     List<CommentDTO> getCommentList(Long postId);
 
-    void writeComment(Long postId,CommentDTO commentDTO, Long userId);
+    Long writeComment(Long postId,CommentDTO commentDTO, Long userId);
 
     void updateComment(Long commentId, CommentDTO commentDTO);
 

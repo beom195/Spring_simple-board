@@ -50,17 +50,21 @@
             <p th:text="${comment.comment}">댓글 내용</p>
             <span>댓글 작성일</span>
             <p th:text="${comment.modifiedDate}">댓글 작성일</p>
+
             <div th:if="${comment.member.userLoginId} == ${sessionMember.userLoginId}">
+<!--                댓글 수정하기 버튼-->
                 <button type="button" data-toggle="collapse" th:attr="data-target='#' + ${comment.commentId}">
                     댓글 수정
                 </button>
+<!--                댓글 수정하기 버튼을 누르면 나오는 수정 폼-->
                 <form class="collapse" th:id="${comment.commentId}">
                     <div>
                         <input type="hidden" id ="commentId" th:value="${comment.commentId}">
-                        <textarea type="text" name="comment" id="comment" th:text="${comment.comment}"></textarea>
+                        <textarea id="update-comment" name="comment" th:text="${comment.comment}"></textarea>
                         <button type="button" id="comment-update-btn">수정</button>
                     </div>
                 </form>
+<!--                댓글 삭제 버튼-->
                 <div>
                     <button type="button" id="comment-delete-btn" th:value="${comment.commentId}">삭제</button>
                 </div>
@@ -68,9 +72,11 @@
         </div>
         <!--        댓글 등록-->
         <div>
-            <form th:action="@{/post/{postId}/comment(postId=${post.getPostId})}" method="post">
-                <textarea name="comment" placeholder="댓글 쓰기"></textarea>
-                <button type="submit">등록</button>
+            <form class="comment-write">
+                <input type="hidden" id ="postId" th:value="${post.postId}">
+                <input type="hidden" id ="userId" th:value="${sessionMember.userId}">
+                <textarea id="write-comment" name="comment" placeholder="댓글을 입력하세요."></textarea>
+                <button type="button" id="comment-write-btn">등록</button>
             </form>
         </div>
 

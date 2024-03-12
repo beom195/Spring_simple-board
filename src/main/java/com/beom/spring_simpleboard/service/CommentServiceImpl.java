@@ -45,7 +45,7 @@ public class CommentServiceImpl implements CommentService {
     //댓글 작성
     @Transactional
     @Override
-    public void writeComment(Long postId, CommentDTO commentDTO, Long userId) {
+    public Long writeComment(Long postId, CommentDTO commentDTO, Long userId) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
         Member member = memberRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
 
@@ -57,7 +57,8 @@ public class CommentServiceImpl implements CommentService {
                 .modifiedDate(commentDTO.getModifiedDate())
                 .build();
         Comment commentDTOToEntity = comment.toEntity();
-        commentRepository.save(commentDTOToEntity);
+        Comment savedComment = commentRepository.save(commentDTOToEntity);
+        return savedComment.getCommentId();
     }
 
     //댓글 수정
@@ -65,6 +66,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void updateComment(Long commentId, CommentDTO commentDTO) {
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
+        log.info("comment = {}", comment.toString());
         comment.update(commentDTO.getComment());
     }
 

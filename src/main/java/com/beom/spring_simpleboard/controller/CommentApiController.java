@@ -7,37 +7,46 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@Controller
+@RestController
 @RequiredArgsConstructor
-public class CommentController {
+public class CommentApiController {
 
     private final CommentService commentService;
 
-    @PostMapping("/post/{postId}/comment")
-    public String writeComment(@PathVariable Long postId, CommentDTO commentDTO, HttpSession session){
-
+    //댓글 작성
+    @PostMapping("/commentWrite/{postId}")
+    public ResponseEntity<Long> writeComment(@PathVariable Long postId, @RequestBody CommentDTO commentDTO, HttpSession session){
         //로그인한 member session 정보 가져오기
         MemberLoginDTO loggedInMember = (MemberLoginDTO) session.getAttribute("member");
-        commentService.writeComment(postId, commentDTO,loggedInMember.getUserId());
-
-        return "redirect:/post/detail/" + postId;
+        log.info("commnetDTO.getComment = {]" , commentDTO.getComment());
+        return ResponseEntity.ok(commentService.writeComment(postId, commentDTO, loggedInMember.getUserId()));
     }
 
-    @PostMapping("/comment/{commentId}")
-    @ResponseBody
+    //댓글 수정
+    @PostMapping("/commentUpdate/{commentId}")
     public ResponseEntity<Long> updateComment(@PathVariable Long commentId, @RequestBody CommentDTO commentDTO){
+        log.info("commentDTO = {}", commentDTO.toString());
         commentService.updateComment(commentId, commentDTO);
         return ResponseEntity.ok(commentId);
     }
 
-    @DeleteMapping("/comment/{commentId}")
-    @ResponseBody
+    //댓글 삭제
+    @DeleteMapping("/commentDelete/{commentId}")
     public ResponseEntity<Long> deleteComment(@PathVariable Long commentId, @RequestBody CommentDTO commentDTO){
         commentService.deleteComment(commentId, commentDTO);
         return ResponseEntity.ok(commentId);
     }
+
+    //    @PostMapping("/post/{postId}/comment")
+//    public String writeComment(@PathVariable Long postId, CommentDTO commentDTO, HttpSession session){
+//
+//        //로그인한 member session 정보 가져오기
+//        MemberLoginDTO loggedInMember = (MemberLoginDTO) session.getAttribute("member");
+//        commentService.writeComment(postId, commentDTO,loggedInMember.getUserId());
+//
+//        return "redirect:/post/detail/" + postId;
+//    }
 }
