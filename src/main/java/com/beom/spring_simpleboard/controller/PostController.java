@@ -1,11 +1,16 @@
 package com.beom.spring_simpleboard.controller;
 
+import com.beom.spring_simpleboard.domain.Post;
 import com.beom.spring_simpleboard.dto.MemberLoginDTO;
 import com.beom.spring_simpleboard.dto.PostDTO;
 import com.beom.spring_simpleboard.service.PostService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -31,10 +35,14 @@ public class PostController {
 
     //전체 게시글 불러오기
     @GetMapping("/")
-    public String viewAllPosts(Model model) {
-        List<PostDTO> posts = postService.viewAllPosts();
-        model.addAttribute("posts", posts);
-        log.info("posts = {}", posts);
+    public String viewAllPosts(Model model, @PageableDefault(sort = "postId", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        Page<Post> postList = postService.postList(pageable);
+        model.addAttribute("nowPage", postList.getNumber() + 1); // 현재 페이지 번호
+        model.addAttribute("startPage", Math.max(postList.getNumber() - 4, 1)); // 시작 페이지 번호
+        model.addAttribute("endPage", Math.min(postList.getNumber() + 5, postList.getTotalPages())); // 끝 페이지 번호
+        model.addAttribute("posts", postList); // 전체 게시글 목록
+        log.info("posts = {}", postList);
         return "index";
     }
 

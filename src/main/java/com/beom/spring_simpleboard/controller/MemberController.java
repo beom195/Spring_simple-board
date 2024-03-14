@@ -62,33 +62,31 @@ public class MemberController {
         //로그인 실패시 데이터 유지
         model.addAttribute("memberLoginDTO", memberLoginDTO);
 
-        Optional<MemberLoginDTO> member = memberService.login(memberLoginDTO);
-
-        //아이디 비밀번호가 공백일 경우
+        //아이디 또는 비밀번호가 공백일 경우(유효성 검사)
         if (errors.hasErrors()) {
             log.info("loginErrors = {}", errors);
             return "member/login";
         }
-        //아이디 비밀번호가 틀릴경우
-        if (member.isEmpty()) {
-            log.info("아이디 또는 비밀번호가 틀립니다.");
+
+        try {
+            MemberLoginDTO member = memberService.login(memberLoginDTO);
+
+            log.info("userLoginId = {}", member.getUserLoginId());
+            log.info("userPassword = {}", member.getUserPassword());
+
+            //로그인 정보 session에 저장
+            session.setAttribute("member", member);
+
+            //session 만료 기간 10분 설정
+            session.setMaxInactiveInterval(600);
+        }catch (IllegalArgumentException e){
+            model.addAttribute("errorMessage", e.getMessage());
             return "member/login";
         }
 
-        //로그인한 Member 정보 받아오기
-        MemberLoginDTO loggedInMember = member.get();
-
-        log.info("userLoginId = {}", loggedInMember.getUserLoginId());
-        log.info("userPassword = {}", loggedInMember.getUserPassword());
-
-        //로그인 정보 session에 저장
-        session.setAttribute("member", loggedInMember);
-
-        //session 만료 기간 10분 설정
-        session.setMaxInactiveInterval(600);
-
         //login 성공시 index.html로 이동
         return "redirect:/";
+
     }
 
 }

@@ -53,24 +53,34 @@ public class PostServiceImpl implements PostService {
     @Transactional
     @Override
     public PostDTO getPostDetail(Long postId) {
-        Optional<Post> postOptional = postRepository.findById(postId);
+        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
 
-        if (postOptional.isPresent()) {
-            Post post = postOptional.get();
-            PostDTO postDetail = PostDTO.builder()
-                    .postId(post.getPostId())
-                    .title(post.getTitle())
-                    .content(post.getContent())
-                    .view(post.getView())
-                    .createdDate(post.getCreatedDate())
-                    .modifiedDate(post.getModifiedDate())
-                    .member(post.getMember())
-                    .build();
+        return PostDTO.builder()
+                .postId(post.getPostId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .view(post.getView())
+                .createdDate(post.getCreatedDate())
+                .modifiedDate(post.getModifiedDate())
+                .member(post.getMember())
+                .build();
 
-            return postDetail;
-        }
-        return null;
+//        if (postOptional.isPresent()) {
+//            Post post = postOptional.get();
+//            PostDTO postDetail = PostDTO.builder()
+//                    .postId(post.getPostId())
+//                    .title(post.getTitle())
+//                    .content(post.getContent())
+//                    .view(post.getView())
+//                    .createdDate(post.getCreatedDate())
+//                    .modifiedDate(post.getModifiedDate())
+//                    .member(post.getMember())
+//                    .build();
+//
+//            return postDetail;
+//        }
+//        return null;
     }
 
     //게시글 수정하기

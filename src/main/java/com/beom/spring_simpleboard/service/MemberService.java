@@ -12,5 +12,5 @@ public interface MemberService {
     void createMember(MemberDTO memberDTO);
 
     //로그인
-    Optional<MemberLoginDTO> login(MemberLoginDTO memberLoginDTO);
+    MemberLoginDTO login(MemberLoginDTO memberLoginDTO);
 }

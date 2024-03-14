@@ -14,7 +14,8 @@
     </div>
     <form th:action="@{/member/login}" th:object="${memberLoginDTO}" method="post">
         <div class="input_area">
-            <input class="typeId" type="text" th:field="${memberLoginDTO.userLoginId}" name="userLoginId" placeholder="ID"><br>
+            <input class="typeId" type="text" th:field="${memberLoginDTO.userLoginId}" name="userLoginId"
+                   placeholder="ID"><br>
             <div class="error-message" th:errors="${memberLoginDTO.userLoginId}">
                 아이디 오류
             </div>
@@ -24,7 +25,9 @@
                 비밀번호 오류
             </div>
         </div>
-
+        <div class="error-message" th:if="${errorMessage != null}">
+            <span th:text="${errorMessage}"></span>
+        </div>
         <div>
             <button class="submitbutton" type="submit">로그인</button>
         </div>

@@ -30,22 +30,16 @@ public class MemberServiceImpl implements MemberService {
     //로그인
     @Transactional
     @Override
-    public Optional<MemberLoginDTO> login(MemberLoginDTO memberLoginDTO) {
+    public MemberLoginDTO login(MemberLoginDTO memberLoginDTO) {
 
-        Optional<Member> memberOptional = memberRepository.findByUserLoginId(memberLoginDTO.getUserLoginId());
+        Member member = memberRepository.findByUserLoginId(memberLoginDTO.getUserLoginId()).orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
 
-        if (memberOptional.isPresent() && memberOptional.get().getUserPassword().equals(memberLoginDTO.getUserPassword())) {
-            Member loggedInMember = memberOptional.get();
-            MemberLoginDTO memberToDTO = MemberLoginDTO.builder()
-                    .userId(loggedInMember.getUserId())
-                    .userLoginId(loggedInMember.getUserLoginId())
-                    .userPassword(loggedInMember.getUserPassword())
-                    .userName(loggedInMember.getUserName())
-                    .build();
-            return Optional.of(memberToDTO);
+        //회원 정보를 찾아서 비밀번호가 맞을 경우 로그인
+        if (member.getUserPassword().equals(memberLoginDTO.getUserPassword())) {
+            return MemberLoginDTO.builder().userId(member.getUserId()).userLoginId(member.getUserLoginId()).userPassword(member.getUserPassword()).userName(member.getUserName()).build();
         }
         else {
-            return Optional.empty();
+            throw new IllegalArgumentException("아이디 또는 비밀번호가 틀립니다.");
         }
     }
 }
