@@ -13,8 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -28,18 +26,6 @@ public class PostServiceImpl implements PostService {
     public Page<Post> postList(Pageable pageable) {
         return postRepository.findAll(pageable);
     }
-
-//    //전체 게시글 불러오기
-//    @Transactional(readOnly = true)
-//    @Override
-//    public List<PostDTO> viewAllPosts() {
-//
-//        List<Post> postList = postRepository.findAll();
-//
-//
-//        //Entity -> DTO
-//        return postList.stream().map(posts -> PostDTO.builder().postId(posts.getPostId()).title(posts.getTitle()).content(posts.getContent()).view(posts.getView()).createdDate(posts.getCreatedDate()).modifiedDate(posts.getModifiedDate()).member(posts.getMember()).build()).collect(Collectors.toList());
-//    }
 
     //게시글 작성
     @Transactional
@@ -65,31 +51,13 @@ public class PostServiceImpl implements PostService {
                 .modifiedDate(post.getModifiedDate())
                 .member(post.getMember())
                 .build();
-
-//        if (postOptional.isPresent()) {
-//            Post post = postOptional.get();
-//            PostDTO postDetail = PostDTO.builder()
-//                    .postId(post.getPostId())
-//                    .title(post.getTitle())
-//                    .content(post.getContent())
-//                    .view(post.getView())
-//                    .createdDate(post.getCreatedDate())
-//                    .modifiedDate(post.getModifiedDate())
-//                    .member(post.getMember())
-//                    .build();
-//
-//            return postDetail;
-//        }
-//        return null;
     }
 
     //게시글 수정하기
     @Transactional
     @Override
     public void postUpdate(Long postId, PostDTO postDTO) {
-        Optional<Post> postOptional = postRepository.findById(postId);
-
-        Post post = postOptional.get();
+        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
         post.update(postDTO.getTitle(), postDTO.getContent());
     }
 

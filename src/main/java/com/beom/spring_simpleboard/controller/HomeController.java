@@ -65,28 +65,5 @@ public class HomeController {
         return "post/write";
     }
 
-    //게시글 상세 페이지로 이동
-    @GetMapping("/post/detail/{id}")
-    public String getPostDetail(@PathVariable("id") Long postId, Model model,
-                                HttpServletRequest request, HttpServletResponse response, HttpSession session){
 
-        //session에 저장된 member 정보가 일치하면 수정과 삭제 버튼을 보이게하기 위해 member session 받아오기
-        MemberLoginDTO loggedInMember = (MemberLoginDTO) session.getAttribute("member");
-
-        //session에 저장된 쿠키에 저장할 유저 고유 식별키
-        Long userId = loggedInMember.getUserId();
-
-        //해당 postId 게시글 정보 가져오기
-        PostDTO post = postService.getPostDetail(postId);
-
-        //게시글 상세 페이지 조회시 조회수 1 상승
-        postService.plusView(postId, request, response, userId);
-
-        List<CommentDTO> commentList = commentService.getCommentList(postId);
-        log.info("commentList = {}", commentList.toString());
-        model.addAttribute("commentList", commentList);
-        model.addAttribute("post", post);
-        model.addAttribute("sessionMember", loggedInMember);
-        return "post/postDetail";
-    }
 }

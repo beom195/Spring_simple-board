@@ -39,14 +39,4 @@ public class CommentApiController {
         commentService.deleteComment(commentId, commentDTO);
         return ResponseEntity.ok(commentId);
     }
-
-    //    @PostMapping("/post/{postId}/comment")
-//    public String writeComment(@PathVariable Long postId, CommentDTO commentDTO, HttpSession session){
-//
-//        //로그인한 member session 정보 가져오기
-//        MemberLoginDTO loggedInMember = (MemberLoginDTO) session.getAttribute("member");
-//        commentService.writeComment(postId, commentDTO,loggedInMember.getUserId());
-//
-//        return "redirect:/post/detail/" + postId;
-//    }
 }

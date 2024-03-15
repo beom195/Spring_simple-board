@@ -14,32 +14,40 @@
 <h1>게시글 상세 페이지</h1>
 <div class="postDetailbox" th:object="${post}">
 
-    <div class="postId-box">
-        <label>번호</label>
-        <p type="text" th:text="*{postId}">게시글 번호</p>
-    </div>
-    <div class="title-box">
-        <label>제목</label>
-        <p type="text" th:text="*{title}">게시글 제목</p>
-    </div>
-    <div class="member-name-box">
-        <label>작성자</label>
-        <p type="text" th:text="*{member.userName}">게시글 작성자</p>
-    </div>
-    <div class="content-box">
-        <label>내용</label>
-        <p type="text" th:text="*{content}">게시글 내용</p>
-    </div>
-
-    <div th:if="${post.member?.userId} == ${sessionMember?.userId}">
-        <a th:href="@{'/post/edit/' + ${post.postId}}">
-            <button>수정</button>
-        </a>
-        <form th:action="@{'/post/delete/' + ${post.postId}}" method="post">
-            <input type="hidden" name="_method" value="delete"/>
-            <button type="submit">삭제</button>
+    <div class="post-box">
+        <form>
+            <div class="postId-box">
+                <p>번호</p>
+                <p id="postNum" name="postId" th:text="${post.postId}">게시글 번호</p>
+            </div>
+            <div class="title-box">
+                <p>제목</p>
+                <p id="title" name="title" th:text="${post.title}">게시글 제목</p>
+            </div>
+            <div class="member-name-box">
+                <p>작성자</p>
+                <p id="writer" type="text" th:text="${post.member.userName}">게시글 작성자</p>
+            </div>
+            <div class="content-box">
+                <p>내용</p>
+                <p id="content" name="content" th:text="${post.content}">게시글 내용</p>
+            </div>
+            <button type="button" id="post-update-btn">수정</button>
+            <button type="button" id="update-save-btn" style="display:none;">등록</button>
+            <button type="button" id="update-cancel-btn" style="display:none;">취소</button>
         </form>
+
+
     </div>
+    <!--    <div th:if="${post.member?.userId} == ${sessionMember?.userId}">-->
+    <!--        <a th:href="@{'/post/edit/' + ${post.postId}}">-->
+    <!--            <button>수정</button>-->
+    <!--        </a>-->
+    <!--        <form th:action="@{'/post/delete/' + ${post.postId}}" method="post">-->
+    <!--            <input type="hidden" name="_method" value="delete"/>-->
+    <!--            <button type="submit">삭제</button>-->
+    <!--        </form>-->
+    <!--    </div>-->
 
     <div class="comment-box">
         <h1>댓글</h1>
@@ -52,19 +60,19 @@
             <p th:text="${comment.modifiedDate}">댓글 작성일</p>
 
             <div th:if="${comment.member.userLoginId} == ${sessionMember.userLoginId}">
-<!--                댓글 수정하기 버튼-->
+                <!--                댓글 수정하기 버튼-->
                 <button type="button" data-toggle="collapse" th:attr="data-target='#' + ${comment.commentId}">
                     댓글 수정
                 </button>
-<!--                댓글 수정하기 버튼을 누르면 나오는 수정 폼-->
+                <!--                댓글 수정하기 버튼을 누르면 나오는 수정 폼-->
                 <form class="collapse" th:id="${comment.commentId}">
                     <div>
-                        <input type="hidden" id ="commentId" th:value="${comment.commentId}">
+                        <input type="hidden" id="commentId" th:value="${comment.commentId}">
                         <textarea id="update-comment" name="comment" th:text="${comment.comment}"></textarea>
                         <button type="button" id="comment-update-btn">수정</button>
                     </div>
                 </form>
-<!--                댓글 삭제 버튼-->
+                <!--                댓글 삭제 버튼-->
                 <div>
                     <button type="button" id="comment-delete-btn" th:value="${comment.commentId}">삭제</button>
                 </div>
@@ -73,8 +81,8 @@
         <!--        댓글 등록-->
         <div>
             <form class="comment-write">
-                <input type="hidden" id ="postId" th:value="${post.postId}">
-                <input type="hidden" id ="userId" th:value="${sessionMember.userId}">
+                <input type="hidden" id="postId" th:value="${post.postId}">
+                <input type="hidden" id="userId" th:value="${sessionMember.userId}">
                 <textarea id="write-comment" name="comment" placeholder="댓글을 입력하세요."></textarea>
                 <button type="button" id="comment-write-btn">등록</button>
             </form>
@@ -89,5 +97,6 @@
 </div>
 
 <script src="/js/comment.js"></script>
+<script src="/js/post.js"></script>
 </body>
 </html>
