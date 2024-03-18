@@ -5,14 +5,15 @@
     <meta charset="UTF-8">
         <link rel="stylesheet" href="/css/writePage.css">
     <title>게시글 작성</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 <h1>게시글 작성하기 페이지</h1>
 <div class="writebox">
-    <form th:action="@{/post/write}" method="post">
-        <input type="text" name="title" placeholder="제목">
-        <textarea name="content" placeholder="글쓰기"></textarea>
-        <button type="submit">등록</button>
+    <form>
+        <input type="text" id="title" name="title" placeholder="제목">
+        <textarea id="content" name="content" placeholder="글쓰기"></textarea>
+        <button type="button" id="post-write-btn" onclick="postWrite()">등록</button>
     </form>
     <div>
         <a th:href="@{/post/viewPosts}">
@@ -20,5 +21,7 @@
         </a>
     </div>
 </div>
+
+<script src="/js/post.js"></script>
 </body>
 </html>

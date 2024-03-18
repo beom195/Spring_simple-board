@@ -1,13 +1,36 @@
+function postWrite() {
+
+    const data = {
+        title: document.querySelector("#title").value, content: document.querySelector("#content").value
+    }
+    if (!data.title || data.title.trim() === "" || !data.content || data.content.trim() === "") {
+        alert("제목 또는 내용을 입력해주세요!");
+        return false;
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "/post/write",
+            dataType: "JSON",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data)
+        }).done(function () {
+            alert("등록 완료");
+            window.location.href = "/";
+        });
+    }
+}
+
 //수정 버튼 클릭시 제목과 내용 부분이 input 태그로 변경, 수정 버튼 사라지고 등록,취소 버튼 생성
-const postUpdateBtn = document.querySelector("#post-update-btn");
-postUpdateBtn.addEventListener("click", function() {
+function postUpdate() {
+    //버튼 변수화
+    const postUpdateBtn = document.querySelector("#post-update-btn");
+    const updateSaveBtn = document.getElementById("update-save-btn");
+    const updateCancelBtn = document.getElementById("update-cancel-btn");
     //제목, 내용 변수화
     const titleElement = document.getElementById("title");
     const contentElement = document.getElementById("content");
 
-    //버튼 변수화
-    const updateSaveBtn = document.getElementById("update-save-btn");
-    const updateCancelBtn = document.getElementById("update-cancel-btn");
+
 
     //게시글 제목, 내용 textArea 타입으로 변경
     replaceWithTextArea(titleElement);
@@ -17,10 +40,11 @@ postUpdateBtn.addEventListener("click", function() {
     postUpdateBtn.style.display = "none";
     updateSaveBtn.style.display = "inline-block";
     updateCancelBtn.style.display = "inline-block";
-});
+    // });
+}
 
-const updateSaveBtn = document.querySelector("#update-save-btn");
-updateSaveBtn.addEventListener("click", () =>{
+//수정한 게시글 저장하기
+function postUpdateSave() {
 
     //게시글 id, 제목, 내용이 담긴 값으로 객체 생성
     const data = {
@@ -28,20 +52,13 @@ updateSaveBtn.addEventListener("click", () =>{
         title: document.querySelector("#title").value,
         content: document.querySelector("#content").value
     }
-    if(!data.title || data.title.trim() === ""){
-        alert("제목을 입력해주세요!");
-        return false;
-    }else if(!data.content || data.content.trim() === ""){
-        alert("내용을 입력해주세요!");
-        return false;
-    }
-
     console.log("postId" + data.postId);
     console.log("title" + data.title);
     console.log("content" + data.content);
-
-    const post_update_check = confirm("게시글을 수정하시겠습니까?");
-    if(post_update_check === true) {
+    if (!data.title || data.title.trim() === "" || !data.content || data.content.trim() === "") {
+        alert("제목 또는 내용을 입력해주세요!");
+        return false;
+    } else {
         $.ajax({
             type: "POST",
             url: "/post/edit/" + data.postId,
@@ -49,16 +66,18 @@ updateSaveBtn.addEventListener("click", () =>{
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data)
         }).done(function () {
+            alert("수정완료");
             window.location.reload();
         });
     }
-});
+}
 
-//취소 버튼 클릭시 페이지 새로고침 (뒤로 가기)
-const updateCancelBtn = document.getElementById("update-cancel-btn");
-updateCancelBtn.addEventListener("click", function() {
-    location.reload(); // 페이지 새로 고침
-});
+//게시글 수정 취소
+function postUpdateCancel() {
+    //취소 버튼 클릭시 페이지 새로고침 (뒤로 가기)
+    window.location.reload();
+}
+
 
 function replaceWithTextArea(element) {
     const textArea = document.createElement("textarea");

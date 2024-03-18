@@ -18,7 +18,7 @@ public class PostApiController {
 
     //게시글 작성
     @PostMapping("/post/write")
-    public String writePost(PostDTO postDTO, HttpSession session) {
+    public ResponseEntity<PostDTO> writePost(@RequestBody PostDTO postDTO, HttpSession session) {
 
         //로그인한 member session 정보 가져오기
         MemberLoginDTO loggedInMember = (MemberLoginDTO) session.getAttribute("member");
@@ -30,7 +30,7 @@ public class PostApiController {
 
         postService.savePost(postDTO);
 
-        return "redirect:/";
+        return ResponseEntity.ok(postDTO);
     }
 
     //게시글 수정하기
