@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -20,7 +22,7 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
 
-
+    //게시글 불러오기
     @Transactional
     @Override
     public Page<Post> postList(Pageable pageable) {
@@ -106,6 +108,14 @@ public class PostServiceImpl implements PostService {
         response.addCookie(cookie); //response에 Cookie 추가
     }
 
+    //게시글 검색하기
+    @Transactional
+    @Override
+    public Page<Post> searchPosts(String keyword, Pageable pageable) {
+
+        Page<Post> posts = postRepository.findByTitleContaining(keyword, pageable);
+        return posts;
+    }
 
 
 }

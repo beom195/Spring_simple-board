@@ -23,7 +23,7 @@ function postWrite() {
 //수정 버튼 클릭시 제목과 내용 부분이 input 태그로 변경, 수정 버튼 사라지고 등록,취소 버튼 생성
 function postUpdate() {
     //버튼 변수화
-    const postUpdateBtn = document.querySelector("#post-update-btn");
+    const postUpdateBtn = document.getElementById("post-update-btn");
     const updateSaveBtn = document.getElementById("update-save-btn");
     const updateCancelBtn = document.getElementById("update-cancel-btn");
     //제목, 내용 변수화

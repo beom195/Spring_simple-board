@@ -87,6 +87,18 @@ public class PostController {
         return "post/postEdit";
     }
 
+    //keyword 제목으로 검색
+    @GetMapping("/post/search")
+    public String searchKeyword(String keyword, @PageableDefault(sort = "postId", direction = Sort.Direction.DESC) Pageable pageable, Model model, HttpSession session){
+
+        //게시글 제목에 keyword 들어간 게시글 불러오기
+        Page<Post> postList = postService.searchPosts(keyword, pageable);
+        model.addAttribute("nowPage", postList.getNumber() + 1); // 현재 페이지 번호
+        model.addAttribute("startPage", Math.max(postList.getNumber() - 4, 1)); // 시작 페이지 번호
+        model.addAttribute("endPage", Math.min(postList.getNumber() + 5, postList.getTotalPages())); // 끝 페이지 번호
+        model.addAttribute("posts", postList);
+        return "post/search";
+    }
 
 
 

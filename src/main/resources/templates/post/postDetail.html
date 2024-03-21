@@ -52,30 +52,40 @@
 
     <div class="comment-box">
         <h1>댓글</h1>
-        <div th:each="comment : ${commentList}">
-            <span>작성자</span>
-            <p th:text="${comment.member.userName}">작성자</p>
-            <span>댓글 내용</span>
-            <p th:text="${comment.comment}">댓글 내용</p>
-            <span>댓글 작성일</span>
-            <p th:text="${comment.modifiedDate}">댓글 작성일</p>
+        <form class="comment-update-form">
+            <div th:each="comment : ${commentList}">
+                <input type="hidden" class="commentId" th:value="${comment.commentId}">
+                <span>작성자</span>
+                <p th:text="${comment.member.userName}">작성자</p>
+                <span>댓글 내용</span>
+                <p id="update-comment" name="comment" th:text="${comment.comment}">댓글 내용</p>
+                <span>댓글 작성일</span>
+                <p th:text="${comment.modifiedDate}">댓글 작성일</p>
 
-            <div th:if="${comment.member.userLoginId} == ${sessionMember.userLoginId}">
-                <!--                댓글 수정하기 버튼-->
-                <button type="submit" data-toggle="collapse" th:attr="data-target='#' + ${comment.commentId}">
-                    댓글 수정
-                </button>
-                <!--                댓글 수정하기 버튼을 누르면 나오는 수정 폼-->
-                <form class="collapse" th:id="${comment.commentId}">
+                <div th:if="${comment.member.userLoginId} == ${sessionMember.userLoginId}">
+                    <!--                댓글 수정하기 버튼-->
+                    <!--                <button type="submit" data-toggle="collapse" th:attr="data-target='#' + ${comment.commentId}">-->
+                    <button type="button" class="comment-update-btn" onclick="commentUpdate()">
+                        댓글 수정
+                    </button>
+                    <!--                댓글 수정하기 버튼을 누르면 나오는 수정 폼-->
+                    <!--                <form class="collapse" th:id="${comment.commentId}">-->
                     <div>
-                        <input type="hidden" class="commentId" th:value="${comment.commentId}">
-                        <textarea class= "update-comment" name="comment" th:text="${comment.comment}"></textarea>
-                        <button type="button" class="comment-update-btn" onclick="commentUpdate()">수정</button>
-                        <button type="button" class="comment-delete-btn" onclick="commentDelete()">삭제</button>
+
+                        <button type="button" class="comment-update-save-btn" onclick="commentUpdateSave()"
+                                style="display: none;">수정
+                        </button>
+                        <button type="button" class="comment-delete-btn" onclick="commentDelete()"
+                                style="display: none;">삭제
+                        </button>
+                        <button type="button" class="comment-update-cancel-btn" onclick="updateCancel()"
+                                style="display: none;">취소
+                        </button>
                     </div>
-                </form>
+
+                </div>
             </div>
-        </div>
+        </form>
         <!--        댓글 등록-->
         <div>
             <form class="comment-write">
@@ -93,7 +103,6 @@
         </a>
     </div>
 </div>
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
 <script src="/js/comment.js"></script>
 <script src="/js/post.js"></script>
 </body>

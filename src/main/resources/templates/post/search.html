@@ -26,14 +26,6 @@
     <div class="container">
         <h2 class="mb-5">SimpleBoard</h2>
 
-        <div class="search">
-            <form th:action="@{/post/search}" method="GET">
-                <div>
-                    <input name="keyword" type="text" placeholder="검색어를 입력해주세요."><button type="submit">검색</button>
-                </div>
-            </form>
-        </div>
-
         <div class="registry" th:if="${session.member == null}">
             <a th:href="@{/member/join}">
                 <button>회원가입</button>
@@ -44,6 +36,15 @@
             <a th:href="@{/post/write}">
                 <button>글쓰기</button>
             </a>
+        </div>
+
+        <div class="search">
+            <form th:action="@{/post/search}" method="GET">
+                <div>
+                    <input name="keyword" type="text" placeholder="검색어를 입력해주세요.">
+                    <button type="submit">검색</button>
+                </div>
+            </form>
         </div>
 
         <div class="registry" th:if="${session.member != null}">
