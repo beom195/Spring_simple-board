@@ -1,6 +1,5 @@
 package com.beom.spring_simpleboard.controller;
 
-import com.beom.spring_simpleboard.domain.Post;
 import com.beom.spring_simpleboard.dto.CommentDTO;
 import com.beom.spring_simpleboard.dto.MemberLoginDTO;
 import com.beom.spring_simpleboard.dto.PostDTO;
@@ -42,7 +41,7 @@ public class PostController {
     @GetMapping("/")
     public String viewAllPosts(Model model, @PageableDefault(sort = "postId", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        Page<Post> postList = postService.postList(pageable);
+        Page<PostDTO> postList = postService.postList(pageable);
         model.addAttribute("nowPage", postList.getNumber() + 1); // 현재 페이지 번호
         model.addAttribute("startPage", Math.max(postList.getNumber() - 4, 1)); // 시작 페이지 번호
         model.addAttribute("endPage", Math.min(postList.getNumber() + 5, postList.getTotalPages())); // 끝 페이지 번호
@@ -76,8 +75,6 @@ public class PostController {
         return "post/postDetail";
     }
 
-
-
     //게시글 수정 페이지로 이동
     @GetMapping("/post/edit/{id}")
     public String getPostUpdate(@PathVariable("id") Long postId, Model model) {
@@ -92,16 +89,11 @@ public class PostController {
     public String searchKeyword(String keyword, @PageableDefault(sort = "postId", direction = Sort.Direction.DESC) Pageable pageable, Model model, HttpSession session){
 
         //게시글 제목에 keyword 들어간 게시글 불러오기
-        Page<Post> postList = postService.searchPosts(keyword, pageable);
+        Page<PostDTO> postList = postService.searchPosts(keyword, pageable);
         model.addAttribute("nowPage", postList.getNumber() + 1); // 현재 페이지 번호
         model.addAttribute("startPage", Math.max(postList.getNumber() - 4, 1)); // 시작 페이지 번호
         model.addAttribute("endPage", Math.min(postList.getNumber() + 5, postList.getTotalPages())); // 끝 페이지 번호
         model.addAttribute("posts", postList);
         return "post/search";
     }
-
-
-
-
-
 }

@@ -34,6 +34,20 @@ public class PostDTO {
         this.member = member;
     }
 
+    //Entity -> DTO
+    public static PostDTO toDTO(Post post) {
+        return PostDTO.builder()
+                .postId(post.getPostId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .createdDate(post.getCreatedDate())
+                .modifiedDate(post.getModifiedDate())
+                .view(post.getView())
+                .member(post.getMember())
+                .build();
+    }
+
+    //DTO -> Entity
     public Post toEntity(){
         return Post.builder()
                 .postId(postId)

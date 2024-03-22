@@ -22,7 +22,7 @@ public interface PostService {
 
     void plusView(Long postId, HttpServletRequest request, HttpServletResponse response, Long userId);
 
-    Page<Post> postList(Pageable pageable);
+    Page<PostDTO> postList(Pageable pageable);
 
-    Page<Post> searchPosts(String keyword, Pageable pageable);
+    Page<PostDTO> searchPosts(String keyword, Pageable pageable);
 }

@@ -1,22 +1,15 @@
 package com.beom.spring_simpleboard.controller;
 
-import com.beom.spring_simpleboard.dto.CommentDTO;
 import com.beom.spring_simpleboard.dto.MemberDTO;
 import com.beom.spring_simpleboard.dto.MemberLoginDTO;
-import com.beom.spring_simpleboard.dto.PostDTO;
 import com.beom.spring_simpleboard.service.CommentService;
 import com.beom.spring_simpleboard.service.PostService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.List;
 
 @Slf4j
 @Controller
