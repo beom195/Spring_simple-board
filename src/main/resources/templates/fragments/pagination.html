@@ -1,0 +1,8 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!--fragment 사용-->
+<div class="paging-box" th:fragment="pagination">
+    <th:block th:each="page:${#numbers.sequence(startPage, endPage)}">
+        <a th:if="${page != nowPage}" th:href="@{/(page=${page -1})}" th:text="${page}"></a>
+        <strong th:if="${page == nowPage}" th:text="${page}" style="color:red"></strong>
+    </th:block>
+</div>

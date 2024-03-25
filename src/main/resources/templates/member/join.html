@@ -10,19 +10,17 @@
 <div class="joinBox">
     <h2 class="joinTitle">회원가입</h2>
     <form th:action="@{/member/join}" th:object="${memberDTO}" method="post">
-        <div>
+        <div class="loginInfo">
             <input type="text" th:field="${memberDTO.userLoginId}" name="userLoginId" placeholder="아이디">
             <div class="error-message" th:errors="${memberDTO.userLoginId}">
                 아이디 오류
             </div>
-        </div>
-        <div>
             <input type="password" th:field="${memberDTO.userPassword}" name="userPassword" placeholder="비밀번호">
             <div class="error-message" th:errors="${memberDTO.userPassword}">
                 비밀번호 오류
             </div>
         </div>
-        <div>
+        <div class="nameInfo">
             <input type="text" th:field="${memberDTO.userName}" name="userName" placeholder="이름">
             <div class="error-message" th:errors="${memberDTO.userName}">
                 이름 오류

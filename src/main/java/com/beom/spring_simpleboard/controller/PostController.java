@@ -86,7 +86,7 @@ public class PostController {
 
     //keyword 제목으로 검색
     @GetMapping("/post/search")
-    public String searchKeyword(String keyword, @PageableDefault(sort = "postId", direction = Sort.Direction.DESC) Pageable pageable, Model model, HttpSession session){
+    public String searchKeyword(String keyword, @PageableDefault(sort = "postId", direction = Sort.Direction.DESC) Pageable pageable, Model model){
 
         //게시글 제목에 keyword 들어간 게시글 불러오기
         Page<PostDTO> postList = postService.searchPosts(keyword, pageable);

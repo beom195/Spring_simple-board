@@ -71,7 +71,26 @@ function postUpdateSave() {
         });
     }
 }
+function postDelete(){
 
+    const data = {
+        postId: document.querySelector("#postNum").textContent
+    }
+    console.log("postId ---->" + data.postId);
+    const post_delete_chk = confirm("게시글을 삭제하시겠습니까?");
+    if(post_delete_chk){
+        $.ajax({
+            type: "DELETE",
+            url: "/post/delete/" + data.postId,
+            dataType: "JSON",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data)
+        }).done(function() {
+            alert("삭제 완료!");
+            location.href = "/";
+        })
+    }
+}
 //게시글 수정 취소
 function postUpdateCancel() {
     //취소 버튼 클릭시 페이지 새로고침 (뒤로 가기)

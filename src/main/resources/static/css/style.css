@@ -138,3 +138,13 @@ h2 {
 .registry{
   float:right;
 }
+.paging-box{
+  text-align: center;
+}
+.search{
+  text-align: center;
+}
+
+.searchInput{
+  width: 300px;
+}

@@ -34,6 +34,7 @@
                 <p id="content" name="content" th:text="${post.content}">게시글 내용</p>
             </div>
             <button type="button" id="post-update-btn" onclick="postUpdate()">수정</button>
+            <button type="button" id="post-delete-btn" onclick="postDelete()">삭제</button>
             <button type="button" id="update-save-btn" onclick="postUpdateSave()" style="display:none;">등록</button>
             <button type="button" id="update-cancel-btn" onclick="postUpdateCancel()" style="display:none;">취소</button>
         </form>

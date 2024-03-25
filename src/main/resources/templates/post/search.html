@@ -1,63 +1,14 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="/fonts/icomoon/style.css">
-
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-
-    <!-- Style -->
-    <link rel="stylesheet" href="/css/style.css">
-
-    <title>SimpleBoard</title>
+    <div th:replace="~{/fragments/header :: index-header}"></div>
 </head>
 <body>
 
-
-<div class="content">
+<div class="content" th:fragment="content-box">
 
     <div class="container">
-        <h2 class="mb-5">SimpleBoard</h2>
-
-        <div class="registry" th:if="${session.member == null}">
-            <a th:href="@{/member/join}">
-                <button>회원가입</button>
-            </a>
-            <a th:href="@{/member/login}">
-                <button>로그인</button>
-            </a>
-            <a th:href="@{/post/write}">
-                <button>글쓰기</button>
-            </a>
-        </div>
-
-        <div class="search">
-            <form th:action="@{/post/search}" method="GET">
-                <div>
-                    <input name="keyword" type="text" placeholder="검색어를 입력해주세요.">
-                    <button type="submit">검색</button>
-                </div>
-            </form>
-        </div>
-
-        <div class="registry" th:if="${session.member != null}">
-            <span th:text="${session.member.userName}"></span>
-            <span>님 환영합니다</span>
-            <a th:href="@{/post/write}">
-                <button>글쓰기</button>
-            </a>
-            <a th:href="@{/member/logout}">
-                <button>로그아웃</button>
-            </a>
-        </div>
-
+        <div th:replace="~{fragments/nav :: nav}"></div>
         <div class="table-responsive">
 
             <table class="table custom-table">
@@ -85,12 +36,7 @@
                 </tbody>
             </table>
         </div>
-        <div>
-            <th:block th:each="page:${#numbers.sequence(startPage, endPage)}">
-                <a th:if="${page != nowPage}" th:href="@{/(page=${page -1})}" th:text="${page}"></a>
-                <strong th:if="${page == nowPage}" th:text="${page}" style="color:red"></strong>
-            </th:block>
-        </div>
+        <div th:replace="~{fragments/pagination :: pagination}"></div>
     </div>
 
 </div>

@@ -42,9 +42,21 @@ public class PostApiController {
 
     //게시글 삭제하기
     @DeleteMapping("/post/delete/{postId}")
-    public String postDelete(@PathVariable Long postId) {
-        log.info("게시글 삭제하기");
+    public ResponseEntity<Long> postDelete(@PathVariable Long postId) {
         postService.postDelete(postId);
-        return "redirect:/";
+        return ResponseEntity.ok(postId);
     }
+
+//    //keyword 제목으로 검색
+//    @GetMapping("/post/search")
+//    public String searchKeyword(String keyword, @PageableDefault(sort = "postId", direction = Sort.Direction.DESC) Pageable pageable, Model model){
+//
+//        //게시글 제목에 keyword 들어간 게시글 불러오기
+//        Page<PostDTO> postList = postService.searchPosts(keyword, pageable);
+//        model.addAttribute("nowPage", postList.getNumber() + 1); // 현재 페이지 번호
+//        model.addAttribute("startPage", Math.max(postList.getNumber() - 4, 1)); // 시작 페이지 번호
+//        model.addAttribute("endPage", Math.min(postList.getNumber() + 5, postList.getTotalPages())); // 끝 페이지 번호
+//        model.addAttribute("posts", postList);
+//        return "post/search";
+//    }
 }
