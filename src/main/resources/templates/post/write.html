@@ -3,23 +3,34 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-        <link rel="stylesheet" href="/css/writePage.css">
+    <link rel="stylesheet" href="/css/writePage.css">
     <title>게시글 작성</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 <h1>게시글 작성하기 페이지</h1>
-<div class="writebox">
+<div class="write-box">
     <form>
-        <input type="text" id="title" name="title" placeholder="제목">
-        <textarea id="content" name="content" placeholder="글쓰기"></textarea>
-        <button type="button" id="post-write-btn" onclick="postWrite()">등록</button>
+        <div class="write"><p>글쓰기</p></div>
+        <div class="writer">
+            <label>작성자</label><span type="text" th:text="${loggedInMember.userName}"></span>
+        </div>
+        <div class="post-title">
+            <label>제목</label><input type="text" id="title" name="title" placeholder="제목">
+        </div>
+        <div class="post-content">
+            <label>내용</label><textarea id="content" name="content" placeholder="글쓰기"></textarea>
+        </div>
+
+        <div>
+            <button type="button" id="post-write-btn" onclick="postWrite()">등록</button>
+
+            <a th:href="@{/post/viewPosts}">
+                <button>목록</button>
+            </a>
+        </div>
     </form>
-    <div>
-        <a th:href="@{/post/viewPosts}">
-            <button>목록</button>
-        </a>
-    </div>
+
 </div>
 
 <script src="/js/post.js"></script>

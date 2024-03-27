@@ -97,7 +97,7 @@ function postUpdateCancel() {
     window.location.reload();
 }
 
-
+//게시글 수정시 title, content textarea 타입으로 변환
 function replaceWithTextArea(element) {
     const textArea = document.createElement("textarea");
     textArea.type = "text";
