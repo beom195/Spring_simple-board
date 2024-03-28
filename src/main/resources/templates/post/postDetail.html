@@ -7,103 +7,104 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/postDetailPage.css">
 
 </head>
 <title>게시글 상세페이지</title>
 </head>
 <body>
-<h1>게시글 상세 페이지</h1>
 <div class="postDetailbox" th:object="${post}">
 
     <div class="post-box">
         <form>
-            <div class="postId-box">
-                <p>번호</p>
-                <p id="postNum" name="postId" th:text="${post.postId}">게시글 번호</p>
-            </div>
-            <div class="title-box">
-                <p>제목</p>
-                <p id="title" name="title" th:text="${post.title}">게시글 제목</p>
-            </div>
-            <div class="member-name-box">
-                <p>작성자</p>
-                <p id="writer" type="text" th:text="${post.member.userName}">게시글 작성자</p>
-            </div>
-            <div class="content-box">
-                <p>내용</p>
-                <p id="content" name="content" th:text="${post.content}">게시글 내용</p>
-            </div>
-            <button type="button" id="post-update-btn" onclick="postUpdate()">수정</button>
-            <button type="button" id="post-delete-btn" onclick="postDelete()">삭제</button>
-            <button type="button" id="update-save-btn" onclick="postUpdateSave()" style="display:none;">등록</button>
-            <button type="button" id="update-cancel-btn" onclick="postUpdateCancel()" style="display:none;">취소</button>
-        </form>
-
-
-    </div>
-    <!--    <div th:if="${post.member?.userId} == ${sessionMember?.userId}">-->
-    <!--        <a th:href="@{'/post/edit/' + ${post.postId}}">-->
-    <!--            <button>수정</button>-->
-    <!--        </a>-->
-    <!--        <form th:action="@{'/post/delete/' + ${post.postId}}" method="post">-->
-    <!--            <input type="hidden" name="_method" value="delete"/>-->
-    <!--            <button type="submit">삭제</button>-->
-    <!--        </form>-->
-    <!--    </div>-->
-
-    <div class="comment-box">
-        <h1>댓글</h1>
-        <form class="comment-update-form">
-            <div th:each="comment : ${commentList}">
-                <input type="hidden" class="commentId" th:value="${comment.commentId}">
-                <span>작성자</span>
-                <p th:text="${comment.member.userName}">작성자</p>
-                <span>댓글 내용</span>
-                <p id="update-comment" name="comment" th:text="${comment.comment}">댓글 내용</p>
-                <span>댓글 작성일</span>
-                <p th:text="${comment.modifiedDate}">댓글 작성일</p>
-
-                <div th:if="${comment.member.userLoginId} == ${sessionMember.userLoginId}">
-                    <!--                댓글 수정하기 버튼-->
-                    <!--                <button type="submit" data-toggle="collapse" th:attr="data-target='#' + ${comment.commentId}">-->
-                    <button type="button" class="comment-update-btn" onclick="commentUpdate()">
-                        댓글 수정
-                    </button>
-                    <!--                댓글 수정하기 버튼을 누르면 나오는 수정 폼-->
-                    <!--                <form class="collapse" th:id="${comment.commentId}">-->
-                    <div>
-
-                        <button type="button" class="comment-update-save-btn" onclick="commentUpdateSave()"
-                                style="display: none;">수정
-                        </button>
-                        <button type="button" class="comment-delete-btn" onclick="commentDelete()"
-                                style="display: none;">삭제
-                        </button>
-                        <button type="button" class="comment-update-cancel-btn" onclick="updateCancel()"
-                                style="display: none;">취소
-                        </button>
-                    </div>
-
+            <!--            <div class="postId-box">-->
+            <!--                <p>번호</p>-->
+            <!--                <p id="postNum" name="postId" th:text="${post.postId}">게시글 번호</p>-->
+            <!--            </div>-->
+            <div class="postInfoBox">
+                <input type="hidden" id="postNum" th:value="${post.postId}">
+                <div class="member-name-box">
+                    <span id="writer" type="text" th:text="${post.member.userName}">게시글 작성자</span>
+                </div>
+                <div class="post-date-box">
+                    <span id="date" type="text" th:text="${post.modifiedDate}">게시글 작성일</span>
+                </div>
+                <div class="post-view-box">
+                    <span>조회수:</span><span id="view" type="text" th:text="${post.view}">게시글 조회수</span>
                 </div>
             </div>
+
+            <div class="title-box">
+                <h1 id="title" name="title" th:text="${post.title}">게시글 제목</h1>
+            </div>
+
+            <div class="content-box">
+                <div id="content" name="content" th:text="${post.content}" style="white-space: pre-line;">게시글 내용</div>
+            </div>
+            <div class="buttonBox" th:if="${post.member?.userId} == ${sessionMember?.userId}">
+                <button type="button" id="post-update-btn" onclick="postUpdate()">수정</button>
+                <button type="button" id="post-delete-btn" onclick="postDelete()">삭제</button>
+                <button type="button" id="update-save-btn" onclick="postUpdateSave()" style="display:none;">등록</button>
+                <button type="button" id="update-cancel-btn" onclick="postUpdateCancel()" style="display:none;">취소</button>
+                <button type="submit"><a th:href="@{/post/viewPosts}">목록</a></button>
+            </div>
         </form>
-        <!--        댓글 등록-->
-        <div>
-            <form class="comment-write">
-                <input type="hidden" id="postId" th:value="${post.postId}">
-                <input type="hidden" id="userId" th:value="${sessionMember.userId}">
-                <textarea id="write-comment" name="comment" placeholder="댓글을 입력하세요."></textarea>
-                <button type="button" id="comment-write-btn" onclick="commentWrite()">등록</button>
-            </form>
-        </div>
+
 
     </div>
-    <div>
-        <a th:href="@{/post/viewPosts}">
-            <button>목록</button>
-        </a>
-    </div>
 </div>
+<!--    <div th:if="${post.member?.userId} == ${sessionMember?.userId}">-->
+<!--        <a th:href="@{'/post/edit/' + ${post.postId}}">-->
+<!--            <button>수정</button>-->
+<!--        </a>-->
+<!--        <form th:action="@{'/post/delete/' + ${post.postId}}" method="post">-->
+<!--            <input type="hidden" name="_method" value="delete"/>-->
+<!--            <button type="submit">삭제</button>-->
+<!--        </form>-->
+<!--    </div>-->
+
+<div class="comment-box">
+    <h1>댓글</h1>
+    <form class="comment-update-form">
+        <div th:each="comment : ${commentList}">
+            <input type="hidden" class="commentId" th:value="${comment.commentId}">
+            <span>작성자</span>
+            <p th:text="${comment.member.userName}">작성자</p>
+            <span>댓글 내용</span>
+            <p id="update-comment" name="comment" th:text="${comment.comment}">댓글 내용</p>
+            <span>댓글 작성일</span>
+            <p th:text="${comment.modifiedDate}">댓글 작성일</p>
+
+            <div th:if="${comment.member.userLoginId} == ${sessionMember.userLoginId}">
+                <!--                댓글 수정하기 버튼-->
+                <!--                <button type="submit" data-toggle="collapse" th:attr="data-target='#' + ${comment.commentId}">-->
+                <button type="button" class="comment-update-btn" onclick="commentUpdate()">
+                    댓글 수정
+                </button>
+                <!--                댓글 수정하기 버튼을 누르면 나오는 수정 폼-->
+                <!--                <form class="collapse" th:id="${comment.commentId}">-->
+                <div>
+                    <button type="button" class="comment-update-save-btn" onclick="commentUpdateSave()" style="display: none;">수정</button>
+                    <button type="button" class="comment-delete-btn" onclick="commentDelete()" style="display: none;">삭제</button>
+                    <button type="button" class="comment-update-cancel-btn" onclick="updateCancel()" style="display: none;">취소</button>
+                </div>
+
+            </div>
+        </div>
+    </form>
+    <!--        댓글 등록-->
+    <div>
+        <form class="comment-write">
+            <input type="hidden" id="postId" th:value="${post.postId}">
+            <input type="hidden" id="userId" th:value="${sessionMember.userId}">
+            <textarea id="write-comment" name="comment" placeholder="댓글을 입력하세요."></textarea>
+            <button type="button" id="comment-write-btn" onclick="commentWrite()">등록</button>
+        </form>
+    </div>
+
+</div>
+
+
 <script src="/js/comment.js"></script>
 <script src="/js/post.js"></script>
 </body>

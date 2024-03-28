@@ -74,7 +74,7 @@ function postUpdateSave() {
 function postDelete(){
 
     const data = {
-        postId: document.querySelector("#postNum").textContent
+        postId: document.querySelector("#postNum").value
     }
     console.log("postId ---->" + data.postId);
     const post_delete_chk = confirm("게시글을 삭제하시겠습니까?");
