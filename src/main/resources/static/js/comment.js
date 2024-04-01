@@ -26,18 +26,42 @@ function commentWrite(){
 
 }
 
+//각 댓글마다 고유 id 부여
+let currentCommentId;
+document.addEventListener('click', function(event) {
+    const target = event.target;
+    if (target.classList.contains('comment-update-btn')) {
+        // 클릭된 버튼이 속한 댓글의 ID 가져오기
+        const commentId = target.closest('.comment').id.split('_')[1];
+        currentCommentId = commentId;
+        // 이제 commentId를 사용하여 해당 댓글에 대한 작업을 수행할 수 있습니다.
+    }
+});
 //댓글 내용 -> textArea 변환
-function commentUpdate() {
-    //버튼 변수화
-    const commentUpdateBtn = document.querySelector(".comment-update-btn");
-    const commentUpdateSaveBtn = document.querySelector(".comment-update-save-btn");
-    const commentDeleteBtn = document.querySelector(".comment-delete-btn");
-    const updateCancelBtn = document.querySelector(".comment-update-cancel-btn");
-    //제목, 내용 변수화
-    const comment = document.getElementById("update-comment");
+function commentUpdate(event) {
+    // 클릭된 버튼의 부모 요소에서 해당 댓글의 요소들을 가져오기
+    const commentContainer = event.target.closest('.comment');
+    const commentUpdateBtn = commentContainer.querySelector(".comment-update-btn");
+    const commentUpdateSaveBtn = commentContainer.querySelector(".comment-update-save-btn");
+    const commentDeleteBtn = commentContainer.querySelector(".comment-delete-btn");
+    const updateCancelBtn = commentContainer.querySelector(".comment-update-cancel-btn");
+
+
+    // //버튼을 누른 댓글에 해당 하는 댓글 내용을 가져옴
+    const comment = commentContainer.querySelector(".comment-content");
+    // currentComment = commentContainer.querySelector(".comment-content");
+    console.log(comment);
 
     //댓글 textArea 타입으로 변경
-    replaceWithTextArea(comment);
+    function replaceWithTextAreaComment(element) {
+        const textArea = document.createElement("textarea");
+        textArea.type = "text";
+        textArea.setAttribute("class", element.className); // 이전 요소의 클래스를 복사
+        textArea.setAttribute("name", element.getAttribute("name")); // 이전 요소의 name 속성을 복사
+        textArea.value = element.textContent || element.innerText;
+        element.parentNode.replaceChild(textArea, element);
+    }
+    replaceWithTextAreaComment(comment);
 
     //수정 버튼 클릭시 등록,취소 버튼만 보이게 변경
     commentUpdateBtn.style.display = "none";
@@ -45,17 +69,36 @@ function commentUpdate() {
     commentDeleteBtn.style.display = "inline-block";
     updateCancelBtn.style.display = "inline-block";
 }
-
-
+// function commentUpdate() {
+//     //버튼 변수화
+//     const commentUpdateBtn = document.querySelector(".comment-update-btn");
+//     const commentUpdateSaveBtn = document.querySelector(".comment-update-save-btn");
+//     const commentDeleteBtn = document.querySelector(".comment-delete-btn");
+//     const updateCancelBtn = document.querySelector(".comment-update-cancel-btn");
+//     //제목, 내용 변수화
+//     const comment = document.getElementById("update-comment");
+//
+//     //댓글 textArea 타입으로 변경
+//     replaceWithTextArea(comment);
+//
+//     //수정 버튼 클릭시 등록,취소 버튼만 보이게 변경
+//     commentUpdateBtn.style.display = "none";
+//     commentUpdateSaveBtn.style.display = "inline-block";
+//     commentDeleteBtn.style.display = "inline-block";
+//     updateCancelBtn.style.display = "inline-block";
+// }
 function commentUpdateSave(){
     //게시글과 댓글 내용에 담긴 값으로 객체 생성
     //id에 입력된 값 가져오기
+
+    // const commentContent = currentComment.textContent.trim(); // 현재 댓글 내용을 가져옴
+
     const data = {
-        commentId: document.querySelector(".commentId").value,
-        comment: document.querySelector("#update-comment").value
+        commentId: currentCommentId,
+        comment: document.querySelector(".comment-content").value
     }
-    console.log("commentId " + data.commentId);
-    console.log("comment" + data.comment);
+    console.log("commentId    " + data.commentId);
+    console.log("comment   " + data.comment);
     if (!data.comment || data.comment.trim() === "") {
         alert("댓글을 입력해주세요!");
         return false;
@@ -69,12 +112,11 @@ function commentUpdateSave(){
             dataType: "JSON",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data)
-        }).done(function () {
+        }).done(function (response) {
             window.location.reload();
         });
     }
 }
-
 
 function commentDelete(){
     const data = {
@@ -101,14 +143,7 @@ function updateCancel(){
     window.location.reload();
 }
 
-function replaceWithTextArea(element) {
-    const textArea = document.createElement("textarea");
-    textArea.type = "text";
-    textArea.setAttribute("class", element.class); // 이전 요소의 id 속성을 복사
-    textArea.setAttribute("name", element.getAttribute("name")); // 이전 요소의 name 속성을 복사
-    textArea.value = element.textContent || element.innerText;
-    element.parentNode.replaceChild(textArea, element);
-}
+
 // const commentWriteBtn = document.querySelector("#comment-write-btn");
 // commentWriteBtn.addEventListener("click", () =>{
 //

@@ -64,21 +64,24 @@
 <!--    </div>-->
 
 <div class="comment-box">
-    <h1>댓글</h1>
-    <form class="comment-update-form">
-        <div th:each="comment : ${commentList}">
-            <input type="hidden" class="commentId" th:value="${comment.commentId}">
-            <span>작성자</span>
-            <p th:text="${comment.member.userName}">작성자</p>
-            <span>댓글 내용</span>
-            <p id="update-comment" name="comment" th:text="${comment.comment}">댓글 내용</p>
-            <span>댓글 작성일</span>
-            <p th:text="${comment.modifiedDate}">댓글 작성일</p>
+    <div class="comment-head">
+        <h4>댓글</h4>
+    </div>
 
-            <div th:if="${comment.member.userLoginId} == ${sessionMember.userLoginId}">
+    <form class="comment-update-form">
+        <div class="comment" th:each="comment : ${commentList}" th:id="'comment_' + ${comment.commentId}">
+<!--        <div class="comment" th:each="comment, commentIndex : ${commentList}">-->
+<!--            <input type="hidden" th:id="'commentId_' + ${commentIndex.index}" class="commentId" th:value="${comment.commentId}">-->
+            <div class="writer-box">
+            <span class="writer" th:text="${comment.member.userName}">작성자</span><span class="date" th:text="${comment.modifiedDate}">댓글 작성일</span>
+            </div>
+            <span class="comment-content" name="comment" th:text="${comment.comment}">댓글 내용</span>
+
+
+            <div class="comment-button-box" th:if="${comment.member.userLoginId} == ${sessionMember.userLoginId}">
                 <!--                댓글 수정하기 버튼-->
                 <!--                <button type="submit" data-toggle="collapse" th:attr="data-target='#' + ${comment.commentId}">-->
-                <button type="button" class="comment-update-btn" onclick="commentUpdate()">
+                <button type="button" class="comment-update-btn" onclick="commentUpdate(event)">
                     댓글 수정
                 </button>
                 <!--                댓글 수정하기 버튼을 누르면 나오는 수정 폼-->

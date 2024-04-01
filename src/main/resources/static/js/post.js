@@ -30,11 +30,19 @@ function postUpdate() {
     const titleElement = document.getElementById("title");
     const contentElement = document.getElementById("content");
 
-
+    //게시글 수정시 title, content textarea 타입으로 변환
+    function replaceWithTextAreaPost(element) {
+        const textArea = document.createElement("textarea");
+        textArea.type = "text";
+        textArea.setAttribute("id", element.id); // 이전 요소의 id 속성을 복사
+        textArea.setAttribute("name", element.getAttribute("name")); // 이전 요소의 name 속성을 복사
+        textArea.value = element.textContent || element.innerText;
+        element.parentNode.replaceChild(textArea, element);
+    }
 
     //게시글 제목, 내용 textArea 타입으로 변경
-    replaceWithTextArea(titleElement);
-    replaceWithTextArea(contentElement);
+    replaceWithTextAreaPost(titleElement);
+    replaceWithTextAreaPost(contentElement);
 
     //수정 버튼 클릭시 등록,취소 버튼만 보이게 변경
     postUpdateBtn.style.display = "none";
@@ -48,13 +56,13 @@ function postUpdateSave() {
 
     //게시글 id, 제목, 내용이 담긴 값으로 객체 생성
     const data = {
-        postId: document.querySelector("#postNum").textContent,
+        postId: document.querySelector("#postNum").value,
         title: document.querySelector("#title").value,
         content: document.querySelector("#content").value
     }
-    console.log("postId" + data.postId);
-    console.log("title" + data.title);
-    console.log("content" + data.content);
+    console.log("postId ---->" + data.postId);
+    console.log("title ---->" + data.title);
+    console.log("content ---->" + data.content);
     if (!data.title || data.title.trim() === "" || !data.content || data.content.trim() === "") {
         alert("제목 또는 내용을 입력해주세요!");
         return false;
@@ -97,12 +105,3 @@ function postUpdateCancel() {
     window.location.reload();
 }
 
-//게시글 수정시 title, content textarea 타입으로 변환
-function replaceWithTextArea(element) {
-    const textArea = document.createElement("textarea");
-    textArea.type = "text";
-    textArea.setAttribute("id", element.id); // 이전 요소의 id 속성을 복사
-    textArea.setAttribute("name", element.getAttribute("name")); // 이전 요소의 name 속성을 복사
-    textArea.value = element.textContent || element.innerText;
-    element.parentNode.replaceChild(textArea, element);
-}
