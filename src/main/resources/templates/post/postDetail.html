@@ -65,7 +65,7 @@
 
 <div class="comment-box">
     <div class="comment-head">
-        <h4>댓글</h4>
+        <h4>댓글(<span th:text="${#lists.size(commentList)}"></span>)</h4>
     </div>
 
     <form class="comment-update-form">
@@ -75,8 +75,9 @@
             <div class="writer-box">
             <span class="writer" th:text="${comment.member.userName}">작성자</span><span class="date" th:text="${comment.modifiedDate}">댓글 작성일</span>
             </div>
+            <div class="comment-content-box">
             <span class="comment-content" name="comment" th:text="${comment.comment}">댓글 내용</span>
-
+            </div>
 
             <div class="comment-button-box" th:if="${comment.member.userLoginId} == ${sessionMember.userLoginId}">
                 <!--                댓글 수정하기 버튼-->
@@ -97,11 +98,13 @@
     </form>
     <!--        댓글 등록-->
     <div>
-        <form class="comment-write">
+        <form>
+            <div class="comment-write-box">
             <input type="hidden" id="postId" th:value="${post.postId}">
             <input type="hidden" id="userId" th:value="${sessionMember.userId}">
             <textarea id="write-comment" name="comment" placeholder="댓글을 입력하세요."></textarea>
             <button type="button" id="comment-write-btn" onclick="commentWrite()">등록</button>
+            </div>
         </form>
     </div>
 
