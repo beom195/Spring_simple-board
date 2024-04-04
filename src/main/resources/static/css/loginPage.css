@@ -20,6 +20,29 @@ input{
     font-size: 22px;
 }
 
+button{
+    background-color: #a3a1a1;
+    color: white;
+
+    position: relative;
+    border: none;
+    display: inline-block;
+    padding: 5px 20px;
+    border-radius: 15px;
+    font-family: "paybooc-Light", sans-serif;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+
+    width: 100%;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.loginButton{
+    margin-top: 10px;
+}
+
 .submitbutton{
     width: 100%;
     margin-top: 20px;
